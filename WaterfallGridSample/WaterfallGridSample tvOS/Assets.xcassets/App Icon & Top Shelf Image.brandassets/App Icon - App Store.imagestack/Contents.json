@@ -1,0 +1,20 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "canvasSize" : {
+      "width" : 1280,
+      "height" : 768
+    }
+  },
+  "layers" : [
+    {
+      "filename" : "image1.imagestacklayer"
+    },
+    {
+      "filename" : "image.imagestacklayer"
+    }
+  ]
+}
