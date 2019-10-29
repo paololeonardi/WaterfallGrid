@@ -69,7 +69,7 @@ A grid of views of type `RectangleView ` from a collection of `Identifiable` dat
 
 In this example, we are also passing to the initializer all the available properties to customize the appearance and the animation of the grid.
 
-```
+```swift
 WaterfallGrid(rectangles,
               columnsInPortrait: 2,
               columnsInLandscape: 3,
