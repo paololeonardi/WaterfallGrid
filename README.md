@@ -86,9 +86,9 @@ WaterfallGrid(rectangles,
 Explore the `WaterfallGridSample` app for some more detailed and interactive examples.
 
 <p align="center">
-	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation_add_remove.gif" alt="Animation Demo 1" width="250"/>&nbsp;
-	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation_swap.gif" alt="Animation Demo 2" width="250"/>&nbsp;
-	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation_toggle_grid.gif" alt="Animation Demo 3" width="250"/>
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation1.gif" alt="Animation Demo 1" width="250"/>&nbsp;
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation2.gif" alt="Animation Demo 2" width="250"/>&nbsp;
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation3.gif" alt="Animation Demo 3" width="250"/>
 </p>
 <p align="center">
 	<img src="https://paololeonardi.github.io/waterfallgrid/resources/demo3.png" alt="Image Demo 3"/>
