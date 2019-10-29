@@ -2,9 +2,21 @@
 
 A waterfall grid layout view for SwiftUI.
 
-<center>
-<img src="Assets/demo1.png"/>
-</center>
+<p align="center">
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/demo1.png" alt="Image Demo 1"/>
+</p>
+
+<p align="center">
+	<img src="https://img.shields.io/bitrise/deaf4a89eca9a69a?token=tU52Wx6TQeKRWAiTE5iS3g&style=flat" />
+	<img src="https://img.shields.io/badge/Swift-5.1-red?style=flat" />
+	<a href="https://swift.org/package-manager">
+		<img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
+	</a>
+	<img src="https://img.shields.io/github/v/tag/paololeonardi/WaterfallGrid?style=flat" />
+	<a href="https://twitter.com/paololeonardi">
+		<img src="https://img.shields.io/badge/contact-@paololeonardi-blue.svg?style=flat" alt="Twitter: @paololeonardi" />
+	</a>
+</p>
 
 ## Features
 
@@ -35,29 +47,57 @@ dependencies: [
 
 ## Usage
 
+You can create a grid that displays the elements of collection by passing your collection of data and a closure that provides a view for each element in the collection. The grid transforms each element in the collection into a child view by using the supplied closure.
+
+WaterfallGrid works with identifiable data (like SwiftUI.List). You can make your data identifiable in one of two ways: by passing along with your data a key path to a property that uniquely identifies each element, or by making your data type conform to the Identifiable protocol.
+
+**Example 1**
+
+A grid of views of type `Image ` from a collection of data identified by a key path.
+
 ```swift
-WaterfallGrid(images, columns: 2) { image in
-    Image(image.name)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
+WaterfallGrid((0..<10), id: \.self, columns: 2) { index in
+	Image("image\(index)")
+		.resizable()
+		.aspectRatio(contentMode: .fit)
 }
 ```
 
-```swift
-WaterfallGrid((0..<cards.count),
-              id: \.self,
+**Example 2**
+
+A grid of views of type `RectangleView ` from a collection of `Identifiable` data.
+
+In this example, we are also passing to the initializer all the available properties to customize the appearance and the animation of the grid.
+
+```
+WaterfallGrid(rectangles,
               columnsInPortrait: 2,
               columnsInLandscape: 3,
               spacing: 8,
               vPadding: 8,
               hPadding: 8,
               animation: .easeInOut
-) { index in
-    CardView(card: self.cards[index])
+) { rectangle in
+    RectangleView(rectangle: rectangle)
 }
 ```
 
-## Versions
+## Sample App
+Explore the `WaterfallGridSample` app for some more detailed and interactive examples.
+
+<p align="center">
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation_add_remove.gif" alt="Animation Demo 1" width="250"/>&nbsp;
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation_swap.gif" alt="Animation Demo 2" width="250"/>&nbsp;
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation_toggle_grid.gif" alt="Animation Demo 3" width="250"/>
+</p>
+<p align="center">
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/demo3.png" alt="Image Demo 3"/>
+</p>
+<p align="center">
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/demo2.png" alt="Image Demo 2"/>
+</p>
+
+## Versioning
 
 For the versions available, see the [tags on this repository](https://github.com/paololeonardi/WaterfallGrid/tags). 
 
