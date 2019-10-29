@@ -53,7 +53,7 @@ WaterfallGrid works with identifiable data (like SwiftUI.List). You can make you
 
 **Example 1**
 
-A grid of views of type `Image ` from a collection of data identified by a key path.
+A grid of views of type `Image` from a collection of data identified by a key path.
 
 ```swift
 WaterfallGrid((0..<10), id: \.self, columns: 2) { index in
@@ -65,7 +65,7 @@ WaterfallGrid((0..<10), id: \.self, columns: 2) { index in
 
 **Example 2**
 
-A grid of views of type `RectangleView ` from a collection of `Identifiable` data.
+A grid of views of type `RectangleView` from a collection of `Identifiable` data.
 
 In this example, we are also passing to the initializer all the available properties to customize the appearance and the animation of the grid.
 
