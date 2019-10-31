@@ -9,10 +9,11 @@ A waterfall grid layout view for SwiftUI.
 <p align="center">
 	<img src="https://img.shields.io/bitrise/deaf4a89eca9a69a?token=tU52Wx6TQeKRWAiTE5iS3g&style=flat" />
 	<img src="https://img.shields.io/badge/Swift-5.1-red?style=flat" />
+	<img src="https://img.shields.io/cocoapods/p/WaterfallGrid" />
 	<a href="https://swift.org/package-manager">
 		<img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
 	</a>
-	<img src="https://img.shields.io/github/v/tag/paololeonardi/WaterfallGrid?style=flat" />
+	<img src="https://img.shields.io/cocoapods/v/WaterfallGrid?color=blue" />
 	<a href="https://twitter.com/paololeonardi">
 		<img src="https://img.shields.io/badge/contact-@paololeonardi-blue.svg?style=flat" alt="Twitter: @paololeonardi" />
 	</a>
