@@ -41,9 +41,20 @@ Once you have your Swift package set up, adding WaterfallGrid as a dependency is
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/paololeonardi/WaterfallGrid.git"))
+	.package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "0.2.0")
 ]
 ```
+
+### CocoaPods
+
+You can install `WaterfallGrid ` via CocoaPods by adding the following line to your `Podfile`:
+
+```ruby
+pod 'WaterfallGrid', '~> 0.2.0'
+```
+
+Run the `pod install` command to download the library
+and integrate it into your Xcode project.
 
 ## Usage
 
