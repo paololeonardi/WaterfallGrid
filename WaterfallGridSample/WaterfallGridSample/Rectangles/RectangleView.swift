@@ -8,12 +8,13 @@ import SwiftUI
 
 struct RectangleView: View {
     let rectangle: RectangleModel
+    let scrollDirection: Axis.Set
     
     var body: some View {
         ZStack {
             Rectangle()
                 .foregroundColor(rectangle.color)
-                .frame(height: rectangle.height)
+                .frame(width: scrollDirection == .horizontal ? rectangle.size : nil, height: scrollDirection == .vertical ? rectangle.size : nil)
                 .cornerRadius(8)
             Text("\(rectangle.index)")
                 .foregroundColor(.white)
@@ -24,7 +25,7 @@ struct RectangleView: View {
 
 struct RoundRectangle_Previews: PreviewProvider {
     static var previews: some View {
-        RectangleView(rectangle: RectangleModel(index: 1, height: 100, color: .red))
+        RectangleView(rectangle: RectangleModel(index: 1, size: 100, color: .red), scrollDirection: .vertical)
             .padding()
             .previewLayout(.sizeThatFits)
     }

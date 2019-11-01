@@ -10,25 +10,11 @@ import SwiftUI
 @available(iOS 13, OSX 10.15, tvOS 13, watchOS 6, *)
 public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable {
 
+    @Environment(\.gridStyle) private var style
+
     private let data: Data
     private let dataId: KeyPath<Data.Element, ID>
-    @PositiveNumber private var columnsInPortrait: Int
-    @PositiveNumber private var columnsInLandscape: Int
-    private let spacing: CGFloat
-    private let vPadding: CGFloat
-    private let hPadding: CGFloat
-    private let animation: Animation?
     private let content: (Data.Element) -> Content
-
-    private var columns: Int {
-        #if os(OSX) || os(tvOS) || targetEnvironment(macCatalyst)
-        return columnsInLandscape
-        #elseif os(watchOS)
-        return columnsInPortrait
-        #else
-        return UIDevice.current.orientation.isLandscape ? columnsInLandscape : columnsInPortrait
-        #endif
-    }
 
     @State private var loaded = false
 
@@ -43,24 +29,26 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     }
 
     private func grid(in geometry: GeometryProxy) -> some View {
-        let columnWidth = self.columnWidth(columns: columns, spacing: spacing, hPadding: hPadding, geometrySize: geometry.size)
-        return ScrollView() {
+        let columnWidth = self.columnWidth(columns: style.columns, spacing: style.spacing, padding: style.padding,
+                                           scrollDirection: style.scrollDirection, geometrySize: geometry.size)
+        return ScrollView(style.scrollDirection) {
             ZStack(alignment: .topLeading) {
                 ForEach(data, id: self.dataId) { element in
                     self.content(element)
-                        .frame(width: columnWidth)
+                        .frame(width: self.style.scrollDirection == .vertical ? columnWidth : nil,
+                               height: self.style.scrollDirection == .horizontal ? columnWidth : nil)
                         .background(PreferenceSetter(id: element[keyPath: self.dataId]))
                         .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
                         .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
                         .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
-                        .animation(self.loaded ? self.animation : nil)
+                        .animation(self.loaded ? self.style.animation : nil)
                 }
             }
-            .padding(.vertical, vPadding)
-            .padding(.horizontal, hPadding)
+            .padding(style.padding)
             .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
                 DispatchQueue.global(qos: .utility).async {
-                    let alignmentGuides = self.calculateAlignmentGuides(columns: self.columns, spacing: self.spacing, preferences: preferences)
+                    let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns, spacing: self.style.spacing,
+                                                                        scrollDirection: self.style.scrollDirection, preferences: preferences)
                     DispatchQueue.main.async {
                         self.alignmentGuides = alignmentGuides
                     }
@@ -71,16 +59,19 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
 
     // MARK: - Helpers
 
-    func calculateAlignmentGuides(columns: Int, spacing: CGFloat, preferences: [ElementPreferenceData]) -> [AnyHashable: CGPoint] {
+    func calculateAlignmentGuides(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, preferences: [ElementPreferenceData]) -> [AnyHashable: CGPoint] {
         var heights = Array(repeating: CGFloat(0), count: columns)
         var alignmentGuides = [AnyHashable: CGPoint]()
 
         preferences.forEach { preference in
             if let minValue = heights.min(), let indexMin = heights.firstIndex(of: minValue) {
-                let width = preference.size.width * CGFloat(indexMin) + CGFloat(indexMin) * spacing
+                let preferenceSizeWidth = scrollDirection == .vertical ? preference.size.width : preference.size.height
+                let preferenceSizeHeight = scrollDirection == .vertical ? preference.size.height : preference.size.width
+                let width = preferenceSizeWidth * CGFloat(indexMin) + CGFloat(indexMin) * spacing
                 let height = heights[indexMin]
-                let offset = CGPoint(x: 0 - width, y: 0 - height)
-                heights[indexMin] += preference.size.height + spacing
+                let offset = CGPoint(x: 0 - (scrollDirection == .vertical ? width : height),
+                                     y: 0 - (scrollDirection == .vertical ? height : width))
+                heights[indexMin] += preferenceSizeHeight + spacing
                 alignmentGuides[preference.id] = offset
             }
         }
@@ -88,8 +79,10 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
         return alignmentGuides
     }
 
-    func columnWidth(columns: Int, spacing: CGFloat, hPadding: CGFloat, geometrySize: CGSize) -> CGFloat {
-        let width = geometrySize.width - (hPadding * 2) - (spacing * (CGFloat(columns) - 1))
+    func columnWidth(columns: Int, spacing: CGFloat, padding: EdgeInsets, scrollDirection: Axis.Set, geometrySize: CGSize) -> CGFloat {
+        let geometrySizeWidth = scrollDirection == .vertical ? geometrySize.width : geometrySize.height
+        let padding = scrollDirection == .vertical ? padding.leading + padding.trailing : padding.top + padding.bottom
+        let width = geometrySizeWidth - padding - (spacing * (CGFloat(columns) - 1))
         return width / CGFloat(columns)
     }
 }
@@ -103,63 +96,10 @@ extension WaterfallGrid {
     ///
     /// - Parameter data: A collection of data.
     /// - Parameter id: Key path to a property on an underlying data element.
-    /// - Parameter columns: The number of columns of the grid.
-    /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter vPadding: The amount to inset the grid on the vertical edge. The default is `8`.
-    /// - Parameter hPadding: The amount to inset the grid on the horizontal edge. The default is `8`.
-    /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
     /// - Parameter content: A function that can be used to generate content on demand given underlying data.
-    public init(_ data: Data,
-                id: KeyPath<Data.Element, ID>,
-                columns: Int,
-                spacing: CGFloat = 8,
-                vPadding: CGFloat = 8,
-                hPadding: CGFloat = 8,
-                animation: Animation? = .default,
-                content: @escaping (Data.Element) -> Content) {
+    public init(_ data: Data, id: KeyPath<Data.Element, ID>, content: @escaping (Data.Element) -> Content) {
         self.data = data
         self.dataId = id
-        self.columnsInPortrait = columns
-        self.columnsInLandscape = columns
-        self.spacing = spacing
-        self.vPadding = vPadding
-        self.hPadding = hPadding
-        self.animation = animation
-        self.content = content
-    }
-
-    /// Creates an instance that uniquely identifies views across updates based
-    /// on the `id` key path to a property on an underlying data element.
-    ///
-    /// - Parameter data: A collection of data.
-    /// - Parameter id: Key path to a property on an underlying data element.
-    /// - Parameter columnsInPortrait: The number of columns of the grid when the device is in a portrait orientation.
-    /// - Parameter columnsInLandscape: The number of columns of the grid when the device is in a landscape orientation.
-    /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter vPadding: The amount to inset the grid on the vertical edge. The default is `8`.
-    /// - Parameter hPadding: The amount to inset the grid on the horizontal edge. The default is `8`.
-    /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
-    /// - Parameter content: A function that can be used to generate content on demand given underlying data.
-    @available(OSX, unavailable)
-    @available(tvOS, unavailable)
-    @available(watchOS, unavailable)
-    public init(_ data: Data,
-                id: KeyPath<Data.Element, ID>,
-                columnsInPortrait: Int,
-                columnsInLandscape: Int,
-                spacing: CGFloat = 8,
-                vPadding: CGFloat = 8,
-                hPadding: CGFloat = 8,
-                animation: Animation? = .default,
-                content: @escaping (Data.Element) -> Content) {
-        self.data = data
-        self.dataId = id
-        self.columnsInPortrait = columnsInPortrait
-        self.columnsInLandscape = columnsInLandscape
-        self.spacing = spacing
-        self.vPadding = vPadding
-        self.hPadding = hPadding
-        self.animation = animation
         self.content = content
     }
 
@@ -171,61 +111,72 @@ extension WaterfallGrid where ID == Data.Element.ID, Data.Element : Identifiable
     /// on the identity of the underlying data element.
     ///
     /// - Parameter data: A collection of identified data.
-    /// - Parameter columns: The number of columns of the grid.
-    /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter vPadding: The amount to inset the grid on the vertical edge. The default is `8`.
-    /// - Parameter hPadding: The amount to inset the grid on the horizontal edge. The default is `8`.
-    /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
     /// - Parameter content: A function that can be used to generate content on demand given underlying data.
-    public init(_ data: Data,
-                columns: Int,
-                spacing: CGFloat = 8,
-                vPadding: CGFloat = 8,
-                hPadding: CGFloat = 8,
-                animation: Animation? = .default,
-                content: @escaping (Data.Element) -> Content) {
+    public init(_ data: Data, content: @escaping (Data.Element) -> Content) {
         self.data = data
         self.dataId = \Data.Element.id
-        self.columnsInPortrait = columns
-        self.columnsInLandscape = columns
-        self.spacing = spacing
-        self.vPadding = vPadding
-        self.hPadding = hPadding
-        self.animation = animation
         self.content = content
     }
 
-    /// Creates an instance that uniquely identifies views across updates based
-    /// on the identity of the underlying data element.
+}
+
+// MARK: - Style Setters
+
+extension WaterfallGrid {
+
+    /// Sets the style for `WaterfallGrid` within the environment of `self`.
     ///
-    /// - Parameter data: A collection of identified data.
-    /// - Parameter columnsInPortrait: The number of columns of the grid when the device is in a portrait orientation.
-    /// - Parameter columnsInLandscape: The number of columns of the grid when the device is in a landscape orientation.
+    /// - Parameter columns: The number of columns of the grid. The default is `2`.
     /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter vPadding: The amount to inset the grid on the vertical edge. The default is `8`.
-    /// - Parameter hPadding: The amount to inset the grid on the horizontal edge. The default is `8`.
+    /// - Parameter padding: The custom distance that the content view is inset from the scroll view edges. The default is`0` for all edges.
+    /// - Parameter scrollDirection: The scrollable axes. The default is `.vertical`.
     /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
-    /// - Parameter content: A function that can be used to generate content on demand given underlying data.
+    public func gridStyle(
+        columns: Int = 2,
+        spacing: CGFloat = 8,
+        padding: EdgeInsets = .init(),
+        scrollDirection: Axis.Set = .vertical,
+        animation: Animation? = .default
+    ) -> some View {
+        let style = GridSyle(
+            columnsInPortrait: columns,
+            columnsInLandscape: columns,
+            spacing: spacing,
+            padding: padding,
+            scrollDirection: scrollDirection,
+            animation: animation
+        )
+        return self.environment(\.gridStyle, style)
+    }
+
+    /// Sets the style for `WaterfallGrid` within the environment of `self`.
+    ///
+    /// - Parameter columnsInPortrait: The number of columns of the grid when the device is in a portrait orientation. The default is `2`.
+    /// - Parameter columnsInLandscape: The number of columns of the grid when the device is in a landscape orientation The default is `2`.
+    /// - Parameter spacing: The distance between adjacent items. The default is `8`.
+    /// - Parameter padding: The custom distance that the content view is inset from the scroll view edges. The default is`0` for all edges.
+    /// - Parameter scrollDirection: The scrollable axes. The default is `.vertical`.
+    /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
     @available(OSX, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    public init(_ data: Data,
-                columnsInPortrait: Int,
-                columnsInLandscape: Int,
-                spacing: CGFloat = 8,
-                vPadding: CGFloat = 8,
-                hPadding: CGFloat = 8,
-                animation: Animation? = .default,
-                content: @escaping (Data.Element) -> Content) {
-        self.data = data
-        self.dataId = \Data.Element.id
-        self.columnsInPortrait = columnsInPortrait
-        self.columnsInLandscape = columnsInLandscape
-        self.spacing = spacing
-        self.vPadding = vPadding
-        self.hPadding = hPadding
-        self.animation = animation
-        self.content = content
+    public func gridStyle(
+        columnsInPortrait: Int = 2,
+        columnsInLandscape: Int = 2,
+        spacing: CGFloat = 8,
+        padding: EdgeInsets = .init(),
+        scrollDirection: Axis.Set = .vertical,
+        animation: Animation? = .default
+    ) -> some View {
+        let style = GridSyle(
+            columnsInPortrait: columnsInPortrait,
+            columnsInLandscape: columnsInLandscape,
+            spacing: spacing,
+            padding: padding,
+            scrollDirection: scrollDirection,
+            animation: animation
+        )
+        return self.environment(\.gridStyle, style)
     }
 
 }

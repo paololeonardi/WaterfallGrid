@@ -13,34 +13,40 @@ struct ImagesGrid: View {
     @Binding var settings: Settings
     
     var body: some View {
+
         #if os(iOS) && !targetEnvironment(macCatalyst)
-        return WaterfallGrid((images),
-                             id: \.self,
-                             columnsInPortrait: Int(settings.columnsInPortrait),
-                             columnsInLandscape: Int(settings.columnsInLandscape),
-                             spacing: CGFloat(settings.spacing),
-                             vPadding: CGFloat(settings.vPadding),
-                             hPadding: CGFloat(settings.hPadding),
-                             animation: settings.animation
-        ) { image in
+
+        return WaterfallGrid((images), id: \.self) { image in
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
+        .gridStyle(
+            columnsInPortrait: Int(settings.columnsInPortrait),
+            columnsInLandscape: Int(settings.columnsInLandscape),
+            spacing: CGFloat(settings.spacing),
+            padding: settings.padding,
+            scrollDirection: settings.scrollDirection == .vertical ? .vertical : .horizontal,
+            animation: settings.animation
+        )
+
         #else
-        return WaterfallGrid((images),
-                             id: \.self,
-                             columns: Int(settings.columns),
-                             spacing: CGFloat(settings.spacing),
-                             vPadding: CGFloat(settings.vPadding),
-                             hPadding: CGFloat(settings.hPadding),
-                             animation: settings.animation
-        ) { image in
+
+        return WaterfallGrid((images), id: \.self) { image in
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
+        .gridStyle(
+            columns: Int(settings.columns),
+            spacing: CGFloat(settings.spacing),
+            padding: settings.padding,
+            scrollDirection: settings.scrollDirection == .vertical ? .vertical : .horizontal,
+            animation: settings.animation
+        )
+
         #endif
+
     }
 }
 

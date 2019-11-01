@@ -35,13 +35,27 @@ struct SettingsView: View {
                         self.valueSelector(self.$newSettings.columnsInLandscape, bounds: 1...10, step: 1, label: "Columns", in: geometry)
                         #endif
                     }
+
                     Section(header: Text("Spacing")) {
                         self.valueSelector(self.$newSettings.spacing, bounds: 0...40, step: 1, label: "Spacing", in: geometry)
                     }
+
                     Section(header: Text("Padding")) {
-                        self.valueSelector(self.$newSettings.vPadding, bounds: 0...40, step: 1, label: "Vertical", in: geometry)
-                        self.valueSelector(self.$newSettings.hPadding, bounds: 0...40, step: 1, label: "Horizontal", in: geometry)
+                        self.valueSelector(self.$newSettings.padding.top, bounds: 0...40, step: 1, label: "Top", in: geometry)
+                        self.valueSelector(self.$newSettings.padding.leading, bounds: 0...40, step: 1, label: "Leading", in: geometry)
+                        self.valueSelector(self.$newSettings.padding.bottom, bounds: 0...40, step: 1, label: "Bottom", in: geometry)
+                        self.valueSelector(self.$newSettings.padding.trailing, bounds: 0...40, step: 1, label: "Trailing", in: geometry)
                     }
+
+                    Section(header: Text("Scroll direction")) {
+                        Picker(selection: self.$newSettings.scrollDirection, label: Text("Axes")) {
+                            ForEach(Axis.allCases, id: \.self) { axes in
+                                Text(axes.description.capitalized)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+
                     Section(header: Text("Animation")) {
                         Toggle(isOn: self.$animationEnabled) {
                             Text("Enabled")
@@ -99,7 +113,8 @@ struct SettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
-    @State static var settings: Settings = Settings(columnsInPortrait: 2, columnsInLandscape: 5, animation: .default, animationSpeed: 1, spacing: 8, vPadding: 8, hPadding: 8)
+    @State static var settings: Settings = Settings(columnsInPortrait: 2, columnsInLandscape: 5, spacing: 8,
+                                                    padding: .init(), scrollDirection: .vertical, animation: .default, animationSpeed: 1)
     
     static var previews: some View {
         SettingsView(settings: $settings, screen: .images, isPresented: .constant(true))

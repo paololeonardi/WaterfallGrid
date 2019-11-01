@@ -11,7 +11,7 @@ struct RectanglesContainer: View {
     @State private var rectangles: [RectangleModel]
     @State private var settings: Settings
     @State private var showSettings = false
-    @State private var rectanglesSameHeight = false
+    @State private var rectanglesSameSize = false
     
     private let editMode: EditMode
     
@@ -37,8 +37,8 @@ struct RectanglesContainer: View {
                 Image(systemName: "gear")
             }
             Spacer(minLength: 20)
-            Button(action: self.toggleRectanglesHeight) {
-                if rectanglesSameHeight {
+            Button(action: self.toggleRectanglesSize) {
+                if rectanglesSameSize {
                     Image(systemName: "rectangle.grid.2x2")
                 } else {
                     Image(systemName: "rectangle.3.offgrid")
@@ -78,8 +78,8 @@ struct RectanglesContainer: View {
     
     private func addNewRectangle() {
         incrementIndexes(by: 1)
-        let height = rectanglesSameHeight ? Generator.Rectangles.fixedHeight() : Generator.Rectangles.randomHeight()
-        rectangles.insert(RectangleModel(index: 0, height: height), at: 0)
+        let size = rectanglesSameSize ? Generator.Rectangles.fixedSize() : Generator.Rectangles.randomSize()
+        rectangles.insert(RectangleModel(index: 0, size: size), at: 0)
     }
     
     private func removeFirstRectangle() {
@@ -99,8 +99,8 @@ struct RectanglesContainer: View {
     private func swapRandomRectangles() {
         let fromIndex = Int.random(in: 0..<rectangles.count / 3)
         let toIndex = Int.random(in: 0..<rectangles.count / 3)
-        let newFromElement = RectangleModel(id: rectangles[toIndex].id, index: fromIndex, height: rectangles[toIndex].height)
-        let newToElement = RectangleModel(id: rectangles[fromIndex].id, index: toIndex, height: rectangles[fromIndex].height)
+        let newFromElement = RectangleModel(id: rectangles[toIndex].id, index: fromIndex, size: rectangles[toIndex].size)
+        let newToElement = RectangleModel(id: rectangles[fromIndex].id, index: toIndex, size: rectangles[fromIndex].size)
         rectangles = rectangles.enumerated().map {
             if $0.offset == fromIndex {
                 return newFromElement
@@ -125,24 +125,16 @@ struct RectanglesContainer: View {
                 return element
             }
         }
-        rectanglesSameHeight = false
+        rectanglesSameSize = false
     }
     
-    private func toggleRectanglesHeight() {
-        if rectanglesSameHeight {
-            rectangles = rectangles.map {
-                var rectangle = $0
-                rectangle.height = Generator.Rectangles.randomHeight()
-                return rectangle
-            }
-        } else {
-            rectangles = rectangles.map {
-                var rectangle = $0
-                rectangle.height = Generator.Rectangles.fixedHeight()
-                return rectangle
-            }
+    private func toggleRectanglesSize() {
+        rectangles = rectangles.map {
+            var rectangle = $0
+            rectangle.size = rectanglesSameSize ? Generator.Rectangles.randomSize() : Generator.Rectangles.fixedSize()
+            return rectangle
         }
-        rectanglesSameHeight.toggle()
+        rectanglesSameSize.toggle()
     }
 }
 

@@ -10,6 +10,6 @@ import SwiftUI
 struct RectangleModel: Identifiable, Equatable {
     var id = UUID()
     var index: Int
-    var height: CGFloat = Generator.Rectangles.randomHeight()
+    var size: CGFloat = Generator.Rectangles.randomSize()
     var color: Color = Generator.Rectangles.randomColor()
 }

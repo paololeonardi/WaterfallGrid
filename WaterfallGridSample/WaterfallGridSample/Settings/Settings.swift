@@ -10,11 +10,11 @@ import SwiftUI
 struct Settings {
     var columnsInPortrait: Double
     var columnsInLandscape: Double
+    var spacing: Double
+    var padding: EdgeInsets
+    var scrollDirection: Axis
     var animation: Animation?
     var animationSpeed: Double
-    var spacing: Double
-    var vPadding: Double
-    var hPadding: Double
     
     var columns: Double {
         #if os(OSX) || os(tvOS) || targetEnvironment(macCatalyst)
@@ -28,14 +28,42 @@ struct Settings {
         animation != nil
     }
     
-    static func `default`(for screen: Screen) -> Settings {
+    static func `default`(for screen: Screen, scrollDirection: Axis = .vertical) -> Settings {
         switch screen {
+
         case .rectangles:
-            return Settings(columnsInPortrait: 4, columnsInLandscape: 5, animation: .default, animationSpeed: 1, spacing: 8, vPadding: 8, hPadding: 8)
+            return Settings(
+                columnsInPortrait: 4,
+                columnsInLandscape: 5,
+                spacing: 8,
+                padding: .init(top: 8, leading: 8, bottom: 8, trailing: 8),
+                scrollDirection: scrollDirection,
+                animation: .default,
+                animationSpeed: 1
+            )
+
         case .images:
-            return Settings(columnsInPortrait: 2, columnsInLandscape: 4, animation: .default, animationSpeed: 1, spacing: 4, vPadding: 0, hPadding: 0)
+            return Settings(
+                columnsInPortrait: 2,
+                columnsInLandscape: 4,
+                spacing: 4,
+                padding: .init(),
+                scrollDirection: scrollDirection,
+                animation: .default,
+                animationSpeed: 1
+            )
+
         case .cards:
-            return Settings(columnsInPortrait: 2, columnsInLandscape: 4, animation: .default, animationSpeed: 1, spacing: 8, vPadding: 8, hPadding: 8)
+            return Settings(
+                columnsInPortrait: 2,
+                columnsInLandscape: 4,
+                spacing: 8,
+                padding: .init(top: 8, leading: 8, bottom: 8, trailing: 8),
+                scrollDirection: scrollDirection,
+                animation: .default,
+                animationSpeed: 1
+            )
         }
+        
     }
 }

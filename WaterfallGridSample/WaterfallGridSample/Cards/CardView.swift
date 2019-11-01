@@ -16,7 +16,7 @@ struct CardView: View {
                 .aspectRatio(contentMode: .fit)
                 .clipped()
                 .layoutPriority(97)
-            
+
             HStack() {
                 VStack(alignment: .leading) {
                     Text(card.title)
