@@ -10,30 +10,39 @@ import WaterfallGrid
 struct RectanglesGrid: View {
     @Binding var rectangles: [RectangleModel]
     @Binding var settings: Settings
-    
+
     var body: some View {
+        let scrollDirection: Axis.Set = settings.scrollDirection == .vertical ? .vertical : .horizontal
+
         #if os(iOS) && !targetEnvironment(macCatalyst)
-        return WaterfallGrid(rectangles,
-                             columnsInPortrait: Int(settings.columnsInPortrait),
-                             columnsInLandscape: Int(settings.columnsInLandscape),
-                             spacing: CGFloat(settings.spacing),
-                             vPadding: CGFloat(settings.vPadding),
-                             hPadding: CGFloat(settings.hPadding),
-                             animation: settings.animation
-        ) { rectangle in
-            RectangleView(rectangle: rectangle)
+
+        return WaterfallGrid(rectangles) { rectangle in
+            RectangleView(rectangle: rectangle, scrollDirection: scrollDirection)
         }
+        .gridStyle(
+            columnsInPortrait: Int(settings.columnsInPortrait),
+            columnsInLandscape: Int(settings.columnsInLandscape),
+            spacing: CGFloat(settings.spacing),
+            padding: settings.padding,
+            scrollDirection: scrollDirection,
+            animation: settings.animation
+        )
+
         #else
-        return WaterfallGrid(rectangles,
-                             columns: Int(settings.columns),
-                             spacing: CGFloat(settings.spacing),
-                             vPadding: CGFloat(settings.vPadding),
-                             hPadding: CGFloat(settings.hPadding),
-                             animation: settings.animation
-        ) { rectangle in
-            RectangleView(rectangle: rectangle)
+
+        return WaterfallGrid(rectangles) { rectangle in
+            RectangleView(rectangle: rectangle, scrollDirection: scrollDirection)
         }
+        .gridStyle(
+            columns: Int(settings.columns),
+            spacing: CGFloat(settings.spacing),
+            padding: settings.padding,
+            scrollDirection: scrollDirection,
+            animation: settings.animation
+        )
+        
         #endif
+        
     }
 }
 

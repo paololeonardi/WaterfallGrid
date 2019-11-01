@@ -13,30 +13,34 @@ struct CardsGrid: View {
     @Binding var settings: Settings
     
     var body: some View {
+        
         #if os(iOS) && !targetEnvironment(macCatalyst)
-        return WaterfallGrid((0..<cards.count),
-                             id: \.self,
-                             columnsInPortrait: Int(settings.columnsInPortrait),
-                             columnsInLandscape: Int(settings.columnsInLandscape),
-                             spacing: CGFloat(settings.spacing),
-                             vPadding: CGFloat(settings.vPadding),
-                             hPadding: CGFloat(settings.hPadding),
-                             animation: settings.animation
-        ) { index in
+
+        return WaterfallGrid((0..<cards.count), id: \.self) { index in
             CardView(card: self.cards[index])
         }
+        .gridStyle(
+            columnsInPortrait: Int(settings.columnsInPortrait),
+            columnsInLandscape: Int(settings.columnsInLandscape),
+            spacing: CGFloat(settings.spacing),
+            padding: settings.padding,
+            animation: settings.animation
+        )
+        
         #else
-        return WaterfallGrid((0..<cards.count),
-                             id: \.self,
-                             columns: Int(settings.columns),
-                             spacing: CGFloat(settings.spacing),
-                             vPadding: CGFloat(settings.vPadding),
-                             hPadding: CGFloat(settings.hPadding),
-                             animation: settings.animation
-        ) { index in
+
+        return WaterfallGrid((0..<cards.count), id: \.self) { index in
             CardView(card: self.cards[index])
         }
+        .gridStyle(
+            columns: Int(settings.columns),
+            spacing: CGFloat(settings.spacing),
+            padding: settings.padding,
+            animation: settings.animation
+        )
+
         #endif
+
     }
 }
 

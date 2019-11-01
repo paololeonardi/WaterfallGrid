@@ -13,13 +13,13 @@ struct Generator {
         static func random(editMode: EditMode) -> [RectangleModel] {
             Array(0..<60).map {
                 let color = editMode == .swapResize ? disabledColor() : randomColor()
-                return RectangleModel(index: $0, height: randomHeight(), color: color)
+                return RectangleModel(index: $0, size: randomSize(), color: color)
             }
         }
         
-        static func randomHeight() -> CGFloat { CGFloat.random(in: 30...120) }
-        
-        static func fixedHeight() -> CGFloat { 60 }
+        static func randomSize() -> CGFloat { CGFloat.random(in: 30...120) }
+
+        static func fixedSize() -> CGFloat { 60 }
         
         static func randomColor() -> Color { [.red, .green, .blue, .orange, .yellow, .pink, .purple].randomElement()! }
         

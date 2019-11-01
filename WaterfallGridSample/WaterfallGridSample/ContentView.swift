@@ -16,12 +16,22 @@ struct ContentView: View {
             NavigationLink(destination: RectanglesGrid(rectangles: .constant(Generator.Rectangles.random(editMode: .addRemove)),
                                                        settings: .constant(Settings.default(for: .rectangles(.addRemove))))
             ) {
-                Text("Rectangles")
+                Text("Rectangles \n[vertical scroll]")
+            }
+            NavigationLink(destination: RectanglesGrid(rectangles: .constant(Generator.Rectangles.random(editMode: .addRemove)),
+                                                       settings: .constant(Settings.default(for: .rectangles(.addRemove), scrollDirection: .horizontal)))
+            ) {
+                Text("Rectangles \n[horizontal scroll]")
             }
             NavigationLink(destination: ImagesGrid(images: .constant(Generator.Images.random()),
                                                    settings: .constant(Settings.default(for: .images)))
             ) {
-                Text("Images")
+                Text("Images \n[vertical scroll]")
+            }
+            NavigationLink(destination: ImagesGrid(images: .constant(Generator.Images.random()),
+                                                   settings: .constant(Settings.default(for: .images, scrollDirection: .horizontal)))
+            ) {
+                Text("Images \n[horizontal scroll]")
             }
         }
         
