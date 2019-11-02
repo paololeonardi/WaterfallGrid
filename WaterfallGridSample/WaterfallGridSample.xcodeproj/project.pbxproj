@@ -41,7 +41,6 @@
 		40505A0F2357E5F200FB8691 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C2909B2332FA66002406AB /* ContentView.swift */; };
 		40505A102357E5F200FB8691 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D4E2357DE9700B77014 /* RectangleView.swift */; };
 		40505A112357E5F200FB8691 /* RectangleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D502357DEFB00B77014 /* RectangleModel.swift */; };
-		40505A122357E5F200FB8691 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C2909B2332FA66002406AB /* ContentView.swift */; };
 		40505A132357E5F200FB8691 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D4E2357DE9700B77014 /* RectangleView.swift */; };
 		40505A142357E5F200FB8691 /* RectangleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D502357DEFB00B77014 /* RectangleModel.swift */; };
 		40505A162357E60600FB8691 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 40505A152357E60600FB8691 /* WaterfallGrid */; };
@@ -50,7 +49,6 @@
 		40505A252357E94300FB8691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40505A242357E94300FB8691 /* Assets.xcassets */; };
 		40505A282357E94300FB8691 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40505A272357E94300FB8691 /* Preview Assets.xcassets */; };
 		40505A2B2357E94300FB8691 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40505A292357E94300FB8691 /* Main.storyboard */; };
-		40505A312357E96800FB8691 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C2909B2332FA66002406AB /* ContentView.swift */; };
 		40505A322357E96800FB8691 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D4E2357DE9700B77014 /* RectangleView.swift */; };
 		40505A332357E96800FB8691 /* RectangleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D502357DEFB00B77014 /* RectangleModel.swift */; };
 		40505A352357E98300FB8691 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 40505A342357E98300FB8691 /* WaterfallGrid */; };
@@ -62,7 +60,6 @@
 		40505A602357EDAD00FB8691 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40505A5F2357EDAD00FB8691 /* ExtensionDelegate.swift */; };
 		40505A622357EDB000FB8691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40505A612357EDB000FB8691 /* Assets.xcassets */; };
 		40505A652357EDB000FB8691 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40505A642357EDB000FB8691 /* Preview Assets.xcassets */; };
-		40505A722357EDF800FB8691 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C2909B2332FA66002406AB /* ContentView.swift */; };
 		40505A732357EDF800FB8691 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D4E2357DE9700B77014 /* RectangleView.swift */; };
 		40505A742357EDF800FB8691 /* RectangleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40541D502357DEFB00B77014 /* RectangleModel.swift */; };
 		40505A762357EE0E00FB8691 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 40505A752357EE0E00FB8691 /* WaterfallGrid */; };
@@ -93,6 +90,9 @@
 		40DBA207236254E900F7CECD /* CardsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DBA205236254E900F7CECD /* CardsGrid.swift */; };
 		40DBA208236254E900F7CECD /* CardsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DBA205236254E900F7CECD /* CardsGrid.swift */; };
 		40DBA209236254E900F7CECD /* CardsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DBA205236254E900F7CECD /* CardsGrid.swift */; };
+		40E42D8A236E163E00B7D2EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E42D89236E163E00B7D2EE /* ContentView.swift */; };
+		40E42D8C236E16F300B7D2EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E42D8B236E16E300B7D2EE /* ContentView.swift */; };
+		40E42D8D236E181700B7D2EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C2909B2332FA66002406AB /* ContentView.swift */; };
 		40EADE86235E541000D9F615 /* CardsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EADE85235E541000D9F615 /* CardsContainer.swift */; };
 		40EADE88235E778600D9F615 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EADE87235E778600D9F615 /* CardView.swift */; };
 		40EADE89235E778600D9F615 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EADE87235E778600D9F615 /* CardView.swift */; };
@@ -193,6 +193,8 @@
 		40DBA1FB2362501900F7CECD /* RectanglesGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectanglesGrid.swift; sourceTree = "<group>"; };
 		40DBA200236253AB00F7CECD /* ImagesGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGrid.swift; sourceTree = "<group>"; };
 		40DBA205236254E900F7CECD /* CardsGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsGrid.swift; sourceTree = "<group>"; };
+		40E42D89236E163E00B7D2EE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		40E42D8B236E16E300B7D2EE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40EADE85235E541000D9F615 /* CardsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsContainer.swift; sourceTree = "<group>"; };
 		40EADE87235E778600D9F615 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -259,6 +261,7 @@
 			children = (
 				40505A192357E82200FB8691 /* WaterfallGridSample iOS.entitlements */,
 				40C290992332FA5D002406AB /* AppDelegate.swift */,
+				40C2909B2332FA66002406AB /* ContentView.swift */,
 				405059DD2357E41900FB8691 /* SceneDelegate.swift */,
 				405059E62357E41D00FB8691 /* LaunchScreen.storyboard */,
 				405059E12357E41D00FB8691 /* Assets.xcassets */,
@@ -279,7 +282,6 @@
 		405059F72357E57300FB8691 /* WaterfallGridSample */ = {
 			isa = PBXGroup;
 			children = (
-				40C2909B2332FA66002406AB /* ContentView.swift */,
 				40C361782360C9E3007F60CC /* Rectangles */,
 				40C3617A2360CEDE007F60CC /* Images */,
 				2044E8FA23605AFD00BDAE3F /* Cards */,
@@ -314,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				40505A202357E93F00FB8691 /* AppDelegate.swift */,
+				40E42D89236E163E00B7D2EE /* ContentView.swift */,
 				40505A242357E94300FB8691 /* Assets.xcassets */,
 				40505A292357E94300FB8691 /* Main.storyboard */,
 				40505A2C2357E94300FB8691 /* Info.plist */,
@@ -344,6 +347,7 @@
 		40505A5A2357EDAD00FB8691 /* WaterfallGridSample watchOS WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				40E42D8B236E16E300B7D2EE /* ContentView.swift */,
 				40505A5D2357EDAD00FB8691 /* HostingController.swift */,
 				40505A5F2357EDAD00FB8691 /* ExtensionDelegate.swift */,
 				40505A612357EDB000FB8691 /* Assets.xcassets */,
@@ -568,6 +572,7 @@
 					};
 					40505A462357EDA900FB8691 = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1110;
 					};
 					40505A552357EDAD00FB8691 = {
 						CreatedOnToolsVersion = 11.0;
@@ -699,9 +704,9 @@
 				40505A002357E5D200FB8691 /* AppDelegate.swift in Sources */,
 				20397145235F60C6000B1300 /* CardsContainer.swift in Sources */,
 				4068E75223626D0E00485327 /* View+Extension.swift in Sources */,
+				40E42D8D236E181700B7D2EE /* ContentView.swift in Sources */,
 				4068E74D236264C500485327 /* Generator.swift in Sources */,
 				402B188D2360F6C9002A4AC8 /* SettingsView.swift in Sources */,
-				40505A122357E5F200FB8691 /* ContentView.swift in Sources */,
 				40075AC7235939EC008C0D1C /* ImagesContainer.swift in Sources */,
 				205FCEBE2361A9D700E87B12 /* Screen.swift in Sources */,
 				40DBA203236253AB00F7CECD /* ImagesGrid.swift in Sources */,
@@ -717,7 +722,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40505A312357E96800FB8691 /* ContentView.swift in Sources */,
 				20BC57CB2360B06B00505B55 /* Card.swift in Sources */,
 				40DBA1FD2362501900F7CECD /* RectanglesGrid.swift in Sources */,
 				40DBA207236254E900F7CECD /* CardsGrid.swift in Sources */,
@@ -728,6 +732,7 @@
 				205FCEBD2361A9D700E87B12 /* Screen.swift in Sources */,
 				40DBA202236253AB00F7CECD /* ImagesGrid.swift in Sources */,
 				402B18872360E562002A4AC8 /* Settings.swift in Sources */,
+				40E42D8A236E163E00B7D2EE /* ContentView.swift in Sources */,
 				40505A212357E93F00FB8691 /* AppDelegate.swift in Sources */,
 				4068E7472362631600485327 /* EditMode.swift in Sources */,
 				40EADE89235E778600D9F615 /* CardView.swift in Sources */,
@@ -748,8 +753,8 @@
 				40505A5E2357EDAD00FB8691 /* HostingController.swift in Sources */,
 				4068E744236262EE00485327 /* Screen.swift in Sources */,
 				40505A602357EDAD00FB8691 /* ExtensionDelegate.swift in Sources */,
-				40505A722357EDF800FB8691 /* ContentView.swift in Sources */,
 				402B18892360E562002A4AC8 /* Settings.swift in Sources */,
+				40E42D8C236E16F300B7D2EE /* ContentView.swift in Sources */,
 				4068E7492362631600485327 /* EditMode.swift in Sources */,
 				40505A742357EDF800FB8691 /* RectangleModel.swift in Sources */,
 				40EADE8B235E778600D9F615 /* CardView.swift in Sources */,
@@ -1000,14 +1005,21 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 586FE2J8R2;
 				IBSC_MODULE = WaterfallGridSample_watchOS_WatchKit_Extension;
 				INFOPLIST_FILE = "WaterfallGridSample watchOS WatchKit App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.paololeonardi.WaterfallGridSample-watchOS.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 6.0;
@@ -1019,10 +1031,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 586FE2J8R2;
 				IBSC_MODULE = WaterfallGridSample_watchOS_WatchKit_Extension;
 				INFOPLIST_FILE = "WaterfallGridSample watchOS WatchKit App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.paololeonardi.WaterfallGridSample-watchOS.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
