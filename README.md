@@ -72,9 +72,9 @@ A grid of views of type `Image` from a collection of data identified by a key pa
 
 ```swift
 WaterfallGrid((0..<10), id: \.self) { index in
-	Image("image\(index)")
-		.resizable()
-		.aspectRatio(contentMode: .fit)
+  Image("image\(index)")
+    .resizable()
+    .aspectRatio(contentMode: .fit)
 }
 ```
 
@@ -84,7 +84,7 @@ A grid of views of type `RectangleView` from a collection of `Identifiable` data
 
 ```swift
 WaterfallGrid(rectangles) { rectangle in
-    RectangleView(rectangle: rectangle)
+  RectangleView(rectangle: rectangle)
 }
 ```
 or, for simple cases like this, just:
@@ -101,7 +101,7 @@ To customise the appearance of the grid call the `gridStyle` function and pass t
 
 ```swift
 WaterfallGrid(cards) { card in
-	CardView(card: card)
+  CardView(card: card)
 }
 .gridStyle(columns: 2)
 ```
@@ -109,17 +109,17 @@ WaterfallGrid(cards) { card in
 ```swift
 WaterfallGrid(cards, content: CardView.init)
 .gridStyle(
-	columnsInPortrait: 2,
-	columnsInLandscape: 3
+  columnsInPortrait: 2,
+  columnsInLandscape: 3
 )
 ```
 
 **Scroll direction**
 
-```
+```swift
 WaterfallGrid(rectangles, content: RectangleView.init)
 .gridStyle(
-	scrollDirection: .horizontal
+  scrollDirection: .horizontal
 )
 ```
 <p align="center">
@@ -129,20 +129,20 @@ WaterfallGrid(rectangles, content: RectangleView.init)
 
 **Spacing and Padding**
 
-```
+```swift
 WaterfallGrid(rectangles, content: RectangleView.init)
 .gridStyle(
-	spacing: 8,
-	padding: EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+  spacing: 8,
+  padding: EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
 )
 ```
 
 **Animation**
 
-```
+```swift
 WaterfallGrid(rectangles, content: RectangleView.init)
 .gridStyle(
-	animation: .easeInOut(duration: 0.5)
+  animation: .easeInOut(duration: 0.5)
 )
 ```
 
