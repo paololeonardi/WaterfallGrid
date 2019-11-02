@@ -21,9 +21,10 @@ A waterfall grid layout view for SwiftUI.
 
 ## Features
 
-- [x] Items fill the most available vertical space.
+- [x] Irregular grid of content.
 - [x] Columns number different per device orientation.
 - [x] Spacing and grid padding customizable.
+- [x] Horizontal or vertical scroll direction.
 - [x] Items update can be animated.
 
 ## Requirements
@@ -42,7 +43,7 @@ Once you have your Swift package set up, adding WaterfallGrid as a dependency is
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "0.2.0")
+  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "0.3.0")
 ]
 ```
 
@@ -51,13 +52,15 @@ dependencies: [
 You can install `WaterfallGrid` via CocoaPods by adding the following line to your `Podfile`:
 
 ```ruby
-pod 'WaterfallGrid', '~> 0.2.0'
+pod 'WaterfallGrid', '~> 0.3.0'
 ```
 
 Run the `pod install` command to download the library
 and integrate it into your Xcode project.
 
 ## Usage
+
+### Initialisation
 
 You can create a grid that displays the elements of collection by passing your collection of data and a closure that provides a view for each element in the collection. The grid transforms each element in the collection into a child view by using the supplied closure.
 
@@ -68,7 +71,7 @@ WaterfallGrid works with identifiable data (like SwiftUI.List). You can make you
 A grid of views of type `Image` from a collection of data identified by a key path.
 
 ```swift
-WaterfallGrid((0..<10), id: \.self, columns: 2) { index in
+WaterfallGrid((0..<10), id: \.self) { index in
 	Image("image\(index)")
 		.resizable()
 		.aspectRatio(contentMode: .fit)
@@ -79,19 +82,68 @@ WaterfallGrid((0..<10), id: \.self, columns: 2) { index in
 
 A grid of views of type `RectangleView` from a collection of `Identifiable` data.
 
-In this example, we are also passing to the initializer all the available properties to customize the appearance and the animation of the grid.
-
 ```swift
-WaterfallGrid(rectangles,
-              columnsInPortrait: 2,
-              columnsInLandscape: 3,
-              spacing: 8,
-              vPadding: 8,
-              hPadding: 8,
-              animation: .easeInOut
-) { rectangle in
+WaterfallGrid(rectangles) { rectangle in
     RectangleView(rectangle: rectangle)
 }
+```
+or, for simple cases like this, just:
+
+```swift
+WaterfallGrid(rectangles, content: RectangleView.init)
+```
+
+### Grid Style 
+
+To customise the appearance of the grid call the `gridStyle` function and pass the parameters you want to customise.
+
+**Columns**
+
+```swift
+WaterfallGrid(cards) { card in
+	CardView(card: card)
+}
+.gridStyle(columns: 2)
+```
+
+```swift
+WaterfallGrid(cards, content: CardView.init)
+.gridStyle(
+	columnsInPortrait: 2,
+	columnsInLandscape: 3
+)
+```
+
+**Scroll direction**
+
+```
+WaterfallGrid(rectangles, content: RectangleView.init)
+.gridStyle(
+	scrollDirection: .horizontal
+)
+```
+<p align="center">
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation4.gif" alt="Animation Demo 4"/>
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation5.gif" alt="Animation Demo 5"/>
+</p>
+
+**Spacing and Padding**
+
+```
+WaterfallGrid(rectangles, content: RectangleView.init)
+.gridStyle(
+	spacing: 8,
+	padding: EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+)
+```
+
+**Animation**
+
+```
+WaterfallGrid(rectangles, content: RectangleView.init)
+.gridStyle(
+	animation: .easeInOut(duration: 0.5)
+)
 ```
 
 ## Sample App
