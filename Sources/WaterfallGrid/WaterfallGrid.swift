@@ -25,6 +25,17 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     public var body: some View {
         GeometryReader { geometry in
             self.grid(in: geometry)
+                .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
+                    DispatchQueue.global(qos: .utility).async {
+                        let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns,
+                                                                            spacing: self.style.spacing,
+                                                                            scrollDirection: self.style.scrollDirection,
+                                                                            preferences: preferences)
+                        DispatchQueue.main.async {
+                            self.alignmentGuides = alignmentGuides
+                        }
+                    }
+                })
         }
     }
 
@@ -41,19 +52,11 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                         .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
                         .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
                         .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
-                        .animation(self.loaded ? self.style.animation : nil)
                 }
             }
             .padding(style.padding)
-            .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
-                DispatchQueue.global(qos: .utility).async {
-                    let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns, spacing: self.style.spacing,
-                                                                        scrollDirection: self.style.scrollDirection, preferences: preferences)
-                    DispatchQueue.main.async {
-                        self.alignmentGuides = alignmentGuides
-                    }
-                }
-            })
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(self.loaded ? self.style.animation : nil)
         }
     }
 
