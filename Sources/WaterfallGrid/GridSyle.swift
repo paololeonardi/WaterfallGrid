@@ -21,7 +21,8 @@ struct GridSyle {
         #elseif os(watchOS)
         return columnsInPortrait
         #else
-        return UIDevice.current.orientation.isLandscape ? columnsInLandscape : columnsInPortrait
+        let screenSize = UIScreen.main.bounds.size
+        return screenSize.width > screenSize.height ? columnsInLandscape : columnsInPortrait
         #endif
     }
 }
