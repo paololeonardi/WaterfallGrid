@@ -24,9 +24,9 @@ struct RectanglesGrid: View {
             columnsInLandscape: Int(settings.columnsInLandscape),
             spacing: CGFloat(settings.spacing),
             padding: settings.padding,
-            scrollDirection: scrollDirection,
             animation: settings.animation
         )
+        .scrollOptions(direction: scrollDirection, showsIndicators: settings.showsIndicators)
 
         #else
 
@@ -37,9 +37,9 @@ struct RectanglesGrid: View {
             columns: Int(settings.columns),
             spacing: CGFloat(settings.spacing),
             padding: settings.padding,
-            scrollDirection: scrollDirection,
             animation: settings.animation
         )
+        .scrollOptions(direction: scrollDirection, showsIndicators: settings.showsIndicators)
         
         #endif
         

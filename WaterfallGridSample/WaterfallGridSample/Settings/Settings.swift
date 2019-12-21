@@ -13,6 +13,7 @@ struct Settings {
     var spacing: Double
     var padding: EdgeInsets
     var scrollDirection: Axis
+    var showsIndicators: Bool
     var animation: Animation?
     var animationSpeed: Double
     
@@ -38,6 +39,7 @@ struct Settings {
                 spacing: 8,
                 padding: .init(top: 8, leading: 8, bottom: 8, trailing: 8),
                 scrollDirection: scrollDirection,
+                showsIndicators: true,
                 animation: .default,
                 animationSpeed: 1
             )
@@ -49,6 +51,7 @@ struct Settings {
                 spacing: 4,
                 padding: .init(),
                 scrollDirection: scrollDirection,
+                showsIndicators: true,
                 animation: .default,
                 animationSpeed: 1
             )
@@ -60,6 +63,7 @@ struct Settings {
                 spacing: 8,
                 padding: .init(top: 8, leading: 8, bottom: 8, trailing: 8),
                 scrollDirection: scrollDirection,
+                showsIndicators: true,
                 animation: .default,
                 animationSpeed: 1
             )

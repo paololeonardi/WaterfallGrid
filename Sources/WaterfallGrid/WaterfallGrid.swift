@@ -11,6 +11,7 @@ import SwiftUI
 public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable {
 
     @Environment(\.gridStyle) private var style
+    @Environment(\.scrollOptions) private var scrollOptions
 
     private let data: Data
     private let dataId: KeyPath<Data.Element, ID>
@@ -29,7 +30,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                     DispatchQueue.global(qos: .utility).async {
                         let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns,
                                                                             spacing: self.style.spacing,
-                                                                            scrollDirection: self.style.scrollDirection,
+                                                                            scrollDirection: self.scrollOptions.direction,
                                                                             preferences: preferences)
                         DispatchQueue.main.async {
                             self.alignmentGuides = alignmentGuides
@@ -41,13 +42,13 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
 
     private func grid(in geometry: GeometryProxy) -> some View {
         let columnWidth = self.columnWidth(columns: style.columns, spacing: style.spacing, padding: style.padding,
-                                           scrollDirection: style.scrollDirection, geometrySize: geometry.size)
-        return ScrollView(style.scrollDirection) {
+                                           scrollDirection: scrollOptions.direction, geometrySize: geometry.size)
+        return ScrollView(scrollOptions.direction, showsIndicators: scrollOptions.showsIndicators) {
             ZStack(alignment: .topLeading) {
                 ForEach(data, id: self.dataId) { element in
                     self.content(element)
-                        .frame(width: self.style.scrollDirection == .vertical ? columnWidth : nil,
-                               height: self.style.scrollDirection == .horizontal ? columnWidth : nil)
+                        .frame(width: self.scrollOptions.direction == .vertical ? columnWidth : nil,
+                               height: self.scrollOptions.direction == .horizontal ? columnWidth : nil)
                         .background(PreferenceSetter(id: element[keyPath: self.dataId]))
                         .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
                         .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
@@ -119,67 +120,6 @@ extension WaterfallGrid where ID == Data.Element.ID, Data.Element : Identifiable
         self.data = data
         self.dataId = \Data.Element.id
         self.content = content
-    }
-
-}
-
-// MARK: - Style Setters
-
-extension WaterfallGrid {
-
-    /// Sets the style for `WaterfallGrid` within the environment of `self`.
-    ///
-    /// - Parameter columns: The number of columns of the grid. The default is `2`.
-    /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter padding: The custom distance that the content view is inset from the scroll view edges. The default is`0` for all edges.
-    /// - Parameter scrollDirection: The scrollable axes. The default is `.vertical`.
-    /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
-    public func gridStyle(
-        columns: Int = 2,
-        spacing: CGFloat = 8,
-        padding: EdgeInsets = .init(),
-        scrollDirection: Axis.Set = .vertical,
-        animation: Animation? = .default
-    ) -> some View {
-        let style = GridSyle(
-            columnsInPortrait: columns,
-            columnsInLandscape: columns,
-            spacing: spacing,
-            padding: padding,
-            scrollDirection: scrollDirection,
-            animation: animation
-        )
-        return self.environment(\.gridStyle, style)
-    }
-
-    /// Sets the style for `WaterfallGrid` within the environment of `self`.
-    ///
-    /// - Parameter columnsInPortrait: The number of columns of the grid when the device is in a portrait orientation. The default is `2`.
-    /// - Parameter columnsInLandscape: The number of columns of the grid when the device is in a landscape orientation The default is `2`.
-    /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter padding: The custom distance that the content view is inset from the scroll view edges. The default is`0` for all edges.
-    /// - Parameter scrollDirection: The scrollable axes. The default is `.vertical`.
-    /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
-    @available(OSX, unavailable)
-    @available(tvOS, unavailable)
-    @available(watchOS, unavailable)
-    public func gridStyle(
-        columnsInPortrait: Int = 2,
-        columnsInLandscape: Int = 2,
-        spacing: CGFloat = 8,
-        padding: EdgeInsets = .init(),
-        scrollDirection: Axis.Set = .vertical,
-        animation: Animation? = .default
-    ) -> some View {
-        let style = GridSyle(
-            columnsInPortrait: columnsInPortrait,
-            columnsInLandscape: columnsInLandscape,
-            spacing: spacing,
-            padding: padding,
-            scrollDirection: scrollDirection,
-            animation: animation
-        )
-        return self.environment(\.gridStyle, style)
     }
 
 }

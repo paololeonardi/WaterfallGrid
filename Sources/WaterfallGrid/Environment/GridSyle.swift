@@ -12,7 +12,6 @@ struct GridSyle {
 
     let spacing: CGFloat
     let padding: EdgeInsets
-    let scrollDirection: Axis.Set
     let animation: Animation?
 
     var columns: Int {
@@ -28,17 +27,13 @@ struct GridSyle {
 }
 
 struct GridStyleKey: EnvironmentKey {
-    static let defaultValue: GridSyle = GridSyle(columnsInPortrait: 2, columnsInLandscape: 2, spacing: 8,
-                                                 padding: .init(), scrollDirection: .vertical, animation: .default)
+    static let defaultValue = GridSyle(columnsInPortrait: 2, columnsInLandscape: 2, spacing: 8,
+                                                 padding: .init(), animation: .default)
 }
 
 extension EnvironmentValues {
     var gridStyle: GridSyle {
-        get {
-            return self[GridStyleKey.self]
-        }
-        set {
-            self[GridStyleKey.self] = newValue
-        }
+        get { self[GridStyleKey.self] }
+        set { self[GridStyleKey.self] = newValue }
     }
 }
