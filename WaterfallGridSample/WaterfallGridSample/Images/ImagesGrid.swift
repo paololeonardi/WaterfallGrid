@@ -13,6 +13,7 @@ struct ImagesGrid: View {
     @Binding var settings: Settings
     
     var body: some View {
+        let scrollDirection: Axis.Set = settings.scrollDirection == .vertical ? .vertical : .horizontal
 
         #if os(iOS) && !targetEnvironment(macCatalyst)
 
@@ -26,9 +27,9 @@ struct ImagesGrid: View {
             columnsInLandscape: Int(settings.columnsInLandscape),
             spacing: CGFloat(settings.spacing),
             padding: settings.padding,
-            scrollDirection: settings.scrollDirection == .vertical ? .vertical : .horizontal,
             animation: settings.animation
         )
+        .scrollOptions(direction: scrollDirection, showsIndicators: settings.showsIndicators)
 
         #else
 
@@ -41,9 +42,9 @@ struct ImagesGrid: View {
             columns: Int(settings.columns),
             spacing: CGFloat(settings.spacing),
             padding: settings.padding,
-            scrollDirection: settings.scrollDirection == .vertical ? .vertical : .horizontal,
             animation: settings.animation
         )
+        .scrollOptions(direction: scrollDirection, showsIndicators: settings.showsIndicators)
 
         #endif
 

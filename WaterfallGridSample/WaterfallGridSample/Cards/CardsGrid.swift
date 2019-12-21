@@ -26,6 +26,7 @@ struct CardsGrid: View {
             padding: settings.padding,
             animation: settings.animation
         )
+        .scrollOptions(showsIndicators: settings.showsIndicators)
         
         #else
 
@@ -38,6 +39,7 @@ struct CardsGrid: View {
             padding: settings.padding,
             animation: settings.animation
         )
+        .scrollOptions(showsIndicators: settings.showsIndicators)
 
         #endif
 

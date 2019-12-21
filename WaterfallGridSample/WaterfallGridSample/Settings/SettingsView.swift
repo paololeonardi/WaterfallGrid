@@ -47,11 +47,14 @@ struct SettingsView: View {
                         self.valueSelector(self.$newSettings.padding.trailing, bounds: 0...40, step: 1, label: "Trailing", in: geometry)
                     }
 
-                    Section(header: Text("Scroll direction")) {
-                        Picker(selection: self.$newSettings.scrollDirection, label: Text("Axes")) {
+                    Section(header: Text("Scroll Options")) {
+                        Picker(selection: self.$newSettings.scrollDirection, label: Text("Direction")) {
                             ForEach(Axis.allCases, id: \.self) { axes in
                                 Text(axes.description.capitalized)
                             }
+                        }
+                        Toggle(isOn: self.$newSettings.showsIndicators) {
+                            Text("Show Indicators")
                         }
                         .pickerStyle(SegmentedPickerStyle())
                     }
@@ -114,7 +117,8 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     @State static var settings: Settings = Settings(columnsInPortrait: 2, columnsInLandscape: 5, spacing: 8,
-                                                    padding: .init(), scrollDirection: .vertical, animation: .default, animationSpeed: 1)
+                                                    padding: .init(), scrollDirection: .vertical,
+                                                    showsIndicators: true, animation: .default, animationSpeed: 1)
     
     static var previews: some View {
         SettingsView(settings: $settings, screen: .images, isPresented: .constant(true))
