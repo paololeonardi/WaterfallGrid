@@ -43,7 +43,7 @@ Once you have your Swift package set up, adding WaterfallGrid as a dependency is
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "0.3.0")
+  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "0.4.0")
 ]
 ```
 
@@ -52,7 +52,7 @@ dependencies: [
 You can install `WaterfallGrid` via CocoaPods by adding the following line to your `Podfile`:
 
 ```ruby
-pod 'WaterfallGrid', '~> 0.3.0'
+pod 'WaterfallGrid', '~> 0.4.0'
 ```
 
 Run the `pod install` command to download the library
@@ -60,7 +60,7 @@ and integrate it into your Xcode project.
 
 ## Usage
 
-### Initialisation
+### Initialization
 
 You can create a grid that displays the elements of collection by passing your collection of data and a closure that provides a view for each element in the collection. The grid transforms each element in the collection into a child view by using the supplied closure.
 
@@ -114,19 +114,6 @@ WaterfallGrid(cards, content: CardView.init)
 )
 ```
 
-**Scroll direction**
-
-```swift
-WaterfallGrid(rectangles, content: RectangleView.init)
-.gridStyle(
-  scrollDirection: .horizontal
-)
-```
-<p align="center">
-	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation4.gif" alt="Animation Demo 4"/>
-	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation5.gif" alt="Animation Demo 5"/>
-</p>
-
 **Spacing and Padding**
 
 ```swift
@@ -146,6 +133,42 @@ WaterfallGrid(rectangles, content: RectangleView.init)
 )
 ```
 
+### Scroll Behaviour
+
+**Scroll direction & Indicators**
+
+```swift
+WaterfallGrid(rectangles, content: RectangleView.init)
+.scrollOptions(
+  direction: .horizontal,
+  showsIndicators: true
+)
+```
+<p align="center">
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation4.gif" alt="Animation Demo 4"/>
+	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation5.gif" alt="Animation Demo 5"/>
+</p>
+
+### A Complete Example
+
+```swift
+WaterfallGrid(cards) { card in
+  CardView(card: card)
+}
+.gridStyle(
+  columnsInPortrait: 2,
+  columnsInLandscape: 3,
+  spacing: 8,
+  padding: EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8),
+  animation: .easeInOut(duration: 0.5)
+)
+.scrollOptions(
+  direction: .horizontal,
+  showsIndicators: true
+)
+```
+
+
 ## Sample App
 Explore the `WaterfallGridSample` app for some more detailed and interactive examples.
 
@@ -163,7 +186,11 @@ Explore the `WaterfallGridSample` app for some more detailed and interactive exa
 
 ## Versioning
 
-For the versions available, see the [tags on this repository](https://github.com/paololeonardi/WaterfallGrid/tags). 
+For the versions available, see the [releases on this repository](https://github.com/paololeonardi/WaterfallGrid/releases). 
+
+## Contributing
+
+Contributions are more than welcome. Please create a GitHub issue before submitting a pull request to plan and discuss implementation.
 
 ## Author
 * [Paolo Leonardi](https://github.com/paololeonardi) ([@paololeonardi](https://twitter.com/paololeonardi))
