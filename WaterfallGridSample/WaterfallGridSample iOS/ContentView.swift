@@ -32,7 +32,7 @@ struct ContentView: View {
                     Image(systemName: "doc.richtext")
                     Text("Cards")
             }.tag(3)
-        }.edgesIgnoringSafeArea(.top)
+        }
 
     }
 }
