@@ -56,7 +56,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                 }
             }
             .padding(style.padding)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(minWidth: 0, idealWidth: geometry.size.width, maxWidth: .infinity, minHeight: 0, idealHeight: geometry.size.height, maxHeight: .infinity, alignment: .topLeading)
             .animation(self.loaded ? self.style.animation : nil)
         }
     }
