@@ -20,14 +20,16 @@ extension View {
         columns: Int = 2,
         spacing: CGFloat = 8,
         padding: EdgeInsets = .init(),
-        animation: Animation? = .default
+        animation: Animation? = .default,
+        background: AnyView = AnyView(Color.clear)
     ) -> some View {
         let style = GridSyle(
             columnsInPortrait: columns,
             columnsInLandscape: columns,
             spacing: spacing,
             padding: padding,
-            animation: animation
+            animation: animation,
+            background: background
         )
         return self.environment(\.gridStyle, style)
     }
@@ -47,14 +49,16 @@ extension View {
         columnsInLandscape: Int = 2,
         spacing: CGFloat = 8,
         padding: EdgeInsets = .init(),
-        animation: Animation? = .default
+        animation: Animation? = .default,
+        background: AnyView = AnyView(Color.clear)
     ) -> some View {
         let style = GridSyle(
             columnsInPortrait: columnsInPortrait,
             columnsInLandscape: columnsInLandscape,
             spacing: spacing,
             padding: padding,
-            animation: animation
+            animation: animation,
+            background: background
         )
         return self.environment(\.gridStyle, style)
     }

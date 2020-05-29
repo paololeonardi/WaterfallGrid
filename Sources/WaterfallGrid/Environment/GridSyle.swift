@@ -13,6 +13,7 @@ struct GridSyle {
     let spacing: CGFloat
     let padding: EdgeInsets
     let animation: Animation?
+    let background: AnyView
 
     var columns: Int {
         #if os(OSX) || os(tvOS) || targetEnvironment(macCatalyst)
@@ -28,7 +29,7 @@ struct GridSyle {
 
 struct GridStyleKey: EnvironmentKey {
     static let defaultValue = GridSyle(columnsInPortrait: 2, columnsInLandscape: 2, spacing: 8,
-                                                 padding: .init(), animation: .default)
+                                       padding: .init(), animation: .default, background: AnyView(Color.clear))
 }
 
 extension EnvironmentValues {

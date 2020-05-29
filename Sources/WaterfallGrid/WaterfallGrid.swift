@@ -45,6 +45,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                                            scrollDirection: scrollOptions.direction, geometrySize: geometry.size)
         return ScrollView(scrollOptions.direction, showsIndicators: scrollOptions.showsIndicators) {
             ZStack(alignment: .topLeading) {
+                self.style.background
                 ForEach(data, id: self.dataId) { element in
                     self.content(element)
                         .frame(width: self.scrollOptions.direction == .vertical ? columnWidth : nil,
@@ -52,11 +53,11 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                         .background(PreferenceSetter(id: element[keyPath: self.dataId]))
                         .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
                         .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
-                        .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
+                         .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
                 }
             }
             .padding(style.padding)
-            .frame(minWidth: 0, idealWidth: geometry.size.width, maxWidth: .infinity, minHeight: 0, idealHeight: geometry.size.height, maxHeight: .infinity, alignment: .topLeading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .animation(self.loaded ? self.style.animation : nil)
         }
     }
