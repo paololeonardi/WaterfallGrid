@@ -53,7 +53,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                         .background(PreferenceSetter(id: element[keyPath: self.dataId]))
                         .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
                         .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
-                         .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
+                        .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
                 }
             }
             .padding(style.padding)
