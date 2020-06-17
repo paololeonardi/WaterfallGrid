@@ -45,6 +45,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                                            scrollDirection: scrollOptions.direction, geometrySize: geometry.size)
         return ScrollView(scrollOptions.direction, showsIndicators: scrollOptions.showsIndicators) {
             ZStack(alignment: .topLeading) {
+                self.style.background
                 ForEach(data, id: self.dataId) { element in
                     self.content(element)
                         .frame(width: self.scrollOptions.direction == .vertical ? columnWidth : nil,
