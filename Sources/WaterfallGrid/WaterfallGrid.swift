@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A container that presents items of variable heights arranged in a grid.
 @available(iOS 13, OSX 10.15, tvOS 13, watchOS 6, *)
-public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable {
+public struct WaterfallGrid<Data, ID, Header, Footer, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable, Header : View, Footer : View {
 
     @Environment(\.gridStyle) private var style
     @Environment(\.scrollOptions) private var scrollOptions
@@ -16,6 +16,8 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     private let data: Data
     private let dataId: KeyPath<Data.Element, ID>
     private let content: (Data.Element) -> Content
+    private let header: Header?
+    private let footer: Footer?
 
     @State private var loaded = false
 
@@ -44,20 +46,26 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
         let columnWidth = self.columnWidth(columns: style.columns, spacing: style.spacing, padding: style.padding,
                                            scrollDirection: scrollOptions.direction, geometrySize: geometry.size)
         return ScrollView(scrollOptions.direction, showsIndicators: scrollOptions.showsIndicators) {
-            ZStack(alignment: .topLeading) {
-                ForEach(data, id: self.dataId) { element in
-                    self.content(element)
-                        .frame(width: self.scrollOptions.direction == .vertical ? columnWidth : nil,
-                               height: self.scrollOptions.direction == .horizontal ? columnWidth : nil)
-                        .background(PreferenceSetter(id: element[keyPath: self.dataId]))
-                        .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
-                        .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
-                        .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
+            VStack {
+                header.padding(padding(for: .header))
+                
+                ZStack(alignment: .topLeading) {
+                    ForEach(data, id: self.dataId) { element in
+                        self.content(element)
+                            .frame(width: self.scrollOptions.direction == .vertical ? columnWidth : nil,
+                                   height: self.scrollOptions.direction == .horizontal ? columnWidth : nil)
+                            .background(PreferenceSetter(id: element[keyPath: self.dataId]))
+                            .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
+                            .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
+                            .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
+                    }
                 }
+                .padding(padding(for: .content))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .animation(self.loaded ? self.style.animation : nil)
+                
+                footer.padding(padding(for: .footer))
             }
-            .padding(style.padding)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .animation(self.loaded ? self.style.animation : nil)
         }
     }
 
@@ -91,6 +99,35 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     }
 }
 
+// MARK: - Helpers
+
+private extension WaterfallGrid {
+    enum PaddingLocation {
+        case header
+        case content
+        case footer
+    }
+    
+    func padding(for location: PaddingLocation) -> EdgeInsets {
+        switch location {
+        case .header:
+            guard header != nil else {
+                return EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0)
+            }
+            
+            return EdgeInsets(top: style.padding.top, leading: style.padding.leading, bottom: style.spacing, trailing: style.padding.trailing)
+        case .content:
+            return EdgeInsets(top: header == nil ? style.padding.top : 0.0, leading: style.padding.leading, bottom: footer == nil ? style.padding.bottom : 0.0, trailing: style.padding.trailing)
+        case .footer:
+            guard footer != nil else {
+                return EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0)
+            }
+            
+            return EdgeInsets(top: style.spacing, leading: style.padding.leading, bottom: style.padding.bottom, trailing: style.padding.trailing)
+        }
+    }
+}
+
 // MARK: - Initializers
 
 extension WaterfallGrid {
@@ -100,25 +137,71 @@ extension WaterfallGrid {
     ///
     /// - Parameter data: A collection of data.
     /// - Parameter id: Key path to a property on an underlying data element.
+    /// - Parameter header: Header to be displayed above content
+    /// - Parameter footer: Footer to be displayed below content.
     /// - Parameter content: A function that can be used to generate content on demand given underlying data.
-    public init(_ data: Data, id: KeyPath<Data.Element, ID>, content: @escaping (Data.Element) -> Content) {
+    public init(_ data: Data, id: KeyPath<Data.Element, ID>, header: Header?, footer: Footer?, content: @escaping (Data.Element) -> Content) {
         self.data = data
         self.dataId = id
+        self.header = header
+        self.footer = footer
         self.content = content
     }
-
+    
 }
 
-extension WaterfallGrid where ID == Data.Element.ID, Data.Element : Identifiable {
+extension WaterfallGrid where Header == EmptyView {
+    
+    /// Creates an instance that uniquely identifies views across updates based
+    /// on the `id` key path to a property on an underlying data element.
+    ///
+    /// - Parameter data: A collection of data.
+    /// - Parameter id: Key path to a property on an underlying data element.
+    /// - Parameter header: Header to be displayed above content
+    /// - Parameter content: A function that can be used to generate content on demand given underlying data.
+    public init(_ data: Data, id: KeyPath<Data.Element, ID>, footer: Footer?, content: @escaping (Data.Element) -> Content) {
+        self.init(data, id: id, header: nil, footer: footer, content: content)
+    }
+}
 
+extension WaterfallGrid where Footer == EmptyView {
+    
+    /// Creates an instance that uniquely identifies views across updates based
+    /// on the `id` key path to a property on an underlying data element.
+    ///
+    /// - Parameter data: A collection of data.
+    /// - Parameter id: Key path to a property on an underlying data element.
+    /// - Parameter header: Header to be displayed above content
+    /// - Parameter content: A function that can be used to generate content on demand given underlying data.
+    public init(_ data: Data, id: KeyPath<Data.Element, ID>, header: Header?, content: @escaping (Data.Element) -> Content) {
+        self.init(data, id: id, header: header, footer: nil, content: content)
+    }
+}
+
+extension WaterfallGrid where ID == Data.Element.ID, Data.Element : Identifiable, Header == EmptyView, Footer == EmptyView {
+
+    /// Creates an instance that uniquely identifies views across updates based
+    /// on the `id` key path to a property on an underlying data element.
+    ///
+    /// - Parameter data: A collection of data.
+    /// - Parameter id: Key path to a property on an underlying data element.
+    /// - Parameter content: A function that can be used to generate content on demand given underlying data.
+    public init(_ data: Data, id: KeyPath<Data.Element, ID>, content: @escaping (Data.Element) -> Content) {
+        self.init(data, id: id, header: nil, footer: nil, content: content)
+    }
+    
     /// Creates an instance that uniquely identifies views across updates based
     /// on the identity of the underlying data element.
     ///
     /// - Parameter data: A collection of identified data.
+    /// - Parameter header: Header to be displayed above content
+    /// - Parameter footer: Footer to be displayed below content
     /// - Parameter content: A function that can be used to generate content on demand given underlying data.
     public init(_ data: Data, content: @escaping (Data.Element) -> Content) {
         self.data = data
         self.dataId = \Data.Element.id
+        self.header = nil
+        self.footer = nil
         self.content = content
     }
 
