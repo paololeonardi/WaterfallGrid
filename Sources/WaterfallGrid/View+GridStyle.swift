@@ -14,19 +14,16 @@ extension View {
     ///
     /// - Parameter columns: The number of columns of the grid. The default is `2`.
     /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter padding: The custom distance that the content view is inset from the scroll view edges. The default is`0` for all edges.
     /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
     public func gridStyle(
         columns: Int = 2,
         spacing: CGFloat = 8,
-        padding: EdgeInsets = .init(),
         animation: Animation? = .default
     ) -> some View {
         let style = GridSyle(
             columnsInPortrait: columns,
             columnsInLandscape: columns,
             spacing: spacing,
-            padding: padding,
             animation: animation
         )
         return self.environment(\.gridStyle, style)
@@ -37,7 +34,6 @@ extension View {
     /// - Parameter columnsInPortrait: The number of columns of the grid when the device is in a portrait orientation. The default is `2`.
     /// - Parameter columnsInLandscape: The number of columns of the grid when the device is in a landscape orientation The default is `2`.
     /// - Parameter spacing: The distance between adjacent items. The default is `8`.
-    /// - Parameter padding: The custom distance that the content view is inset from the scroll view edges. The default is`0` for all edges.
     /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
     @available(OSX, unavailable)
     @available(tvOS, unavailable)
@@ -46,14 +42,12 @@ extension View {
         columnsInPortrait: Int = 2,
         columnsInLandscape: Int = 2,
         spacing: CGFloat = 8,
-        padding: EdgeInsets = .init(),
         animation: Animation? = .default
     ) -> some View {
         let style = GridSyle(
             columnsInPortrait: columnsInPortrait,
             columnsInLandscape: columnsInLandscape,
             spacing: spacing,
-            padding: padding,
             animation: animation
         )
         return self.environment(\.gridStyle, style)

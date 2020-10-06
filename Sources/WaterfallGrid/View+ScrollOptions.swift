@@ -14,9 +14,8 @@ extension View {
     ///
     /// - Parameters:
     ///   - direction: The scrollable axes. The default is `.vertical`.
-    ///   - showsIndicators: Whether to show the scroll indicators. The default is `true`.
-    public func scrollOptions(direction: Axis.Set = .vertical, showsIndicators: Bool = true) -> some View {
-        let options = ScrollOptions(direction: direction, showsIndicators: showsIndicators)
+    public func scrollOptions(direction: Axis.Set) -> some View {
+        let options = ScrollOptions(direction: direction)
         return self.environment(\.scrollOptions, options)
     }
 

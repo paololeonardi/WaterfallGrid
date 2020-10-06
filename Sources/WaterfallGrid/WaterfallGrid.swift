@@ -18,32 +18,37 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     private let content: (Data.Element) -> Content
 
     @State private var loaded = false
+    @State private var gridHeight: CGFloat = 0
 
     @State private var alignmentGuides = [AnyHashable: CGPoint]() {
         didSet { loaded = !oldValue.isEmpty }
     }
     
     public var body: some View {
-        GeometryReader { geometry in
-            self.grid(in: geometry)
-                .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
-                    DispatchQueue.global(qos: .utility).async {
-                        let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns,
-                                                                            spacing: self.style.spacing,
-                                                                            scrollDirection: self.scrollOptions.direction,
-                                                                            preferences: preferences)
-                        DispatchQueue.main.async {
-                            self.alignmentGuides = alignmentGuides
+        VStack {
+            GeometryReader { geometry in
+                self.grid(in: geometry)
+                    .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns,
+                                                                                spacing: self.style.spacing,
+                                                                                scrollDirection: self.scrollOptions.direction,
+                                                                                preferences: preferences)
+                            DispatchQueue.main.async {
+                                self.alignmentGuides = alignmentGuides
+                            }
                         }
-                    }
-                })
+                    })
+            }
         }
+        .frame(width: self.scrollOptions.direction == .horizontal ? gridHeight : nil,
+               height: self.scrollOptions.direction == .vertical ? gridHeight : nil)
     }
 
     private func grid(in geometry: GeometryProxy) -> some View {
-        let columnWidth = self.columnWidth(columns: style.columns, spacing: style.spacing, padding: style.padding,
+        let columnWidth = self.columnWidth(columns: style.columns, spacing: style.spacing,
                                            scrollDirection: scrollOptions.direction, geometrySize: geometry.size)
-        return ScrollView(scrollOptions.direction, showsIndicators: scrollOptions.showsIndicators) {
+        return
             ZStack(alignment: .topLeading) {
                 ForEach(data, id: self.dataId) { element in
                     self.content(element)
@@ -55,10 +60,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                         .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
                 }
             }
-            .padding(style.padding)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .animation(self.loaded ? self.style.animation : nil)
-        }
     }
 
     // MARK: - Helpers
@@ -79,14 +81,15 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                 alignmentGuides[preference.id] = offset
             }
         }
-
+        
+        gridHeight = (heights.max() ?? spacing) - spacing
+        
         return alignmentGuides
     }
 
-    func columnWidth(columns: Int, spacing: CGFloat, padding: EdgeInsets, scrollDirection: Axis.Set, geometrySize: CGSize) -> CGFloat {
+    func columnWidth(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, geometrySize: CGSize) -> CGFloat {
         let geometrySizeWidth = scrollDirection == .vertical ? geometrySize.width : geometrySize.height
-        let padding = scrollDirection == .vertical ? padding.leading + padding.trailing : padding.top + padding.bottom
-        let width = geometrySizeWidth - padding - (spacing * (CGFloat(columns) - 1))
+        let width = max(0, geometrySizeWidth - (spacing * (CGFloat(columns) - 1)))
         return width / CGFloat(columns)
     }
 }
