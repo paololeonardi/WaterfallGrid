@@ -54,10 +54,8 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/WaterfallGridSample watchOS WatchKit App">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "40505A462357EDA900FB8691"
@@ -65,7 +63,7 @@
             BlueprintName = "WaterfallGridSample watchOS WatchKit App"
             ReferencedContainer = "container:WaterfallGridSample.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -73,10 +71,8 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/WaterfallGridSample watchOS WatchKit App">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "40505A462357EDA900FB8691"
@@ -84,16 +80,7 @@
             BlueprintName = "WaterfallGridSample watchOS WatchKit App"
             ReferencedContainer = "container:WaterfallGridSample.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "40505A462357EDA900FB8691"
-            BuildableName = "WaterfallGridSample watchOS WatchKit App.app"
-            BlueprintName = "WaterfallGridSample watchOS WatchKit App"
-            ReferencedContainer = "container:WaterfallGridSample.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

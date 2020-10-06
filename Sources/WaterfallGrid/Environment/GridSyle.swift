@@ -11,7 +11,6 @@ struct GridSyle {
     @PositiveNumber var columnsInLandscape: Int
 
     let spacing: CGFloat
-    let padding: EdgeInsets
     let animation: Animation?
 
     var columns: Int {
@@ -27,8 +26,8 @@ struct GridSyle {
 }
 
 struct GridStyleKey: EnvironmentKey {
-    static let defaultValue = GridSyle(columnsInPortrait: 2, columnsInLandscape: 2, spacing: 8,
-                                                 padding: .init(), animation: .default)
+    static let defaultValue = GridSyle(columnsInPortrait: 2, columnsInLandscape: 2,
+                                       spacing: 8, animation: .default)
 }
 
 extension EnvironmentValues {

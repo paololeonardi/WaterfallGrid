@@ -16,30 +16,36 @@ struct RectanglesGrid: View {
 
         #if os(iOS) && !targetEnvironment(macCatalyst)
 
-        return WaterfallGrid(rectangles) { rectangle in
-            RectangleView(rectangle: rectangle, scrollDirection: scrollDirection)
-        }
-        .gridStyle(
-            columnsInPortrait: Int(settings.columnsInPortrait),
-            columnsInLandscape: Int(settings.columnsInLandscape),
-            spacing: CGFloat(settings.spacing),
-            padding: settings.padding,
-            animation: settings.animation
-        )
-        .scrollOptions(direction: scrollDirection, showsIndicators: settings.showsIndicators)
+        return
+            ScrollView(scrollDirection, showsIndicators: settings.showsIndicators) {
+                WaterfallGrid(rectangles) { rectangle in
+                    RectangleView(rectangle: rectangle, scrollDirection: scrollDirection)
+                }
+                .gridStyle(
+                    columnsInPortrait: Int(settings.columnsInPortrait),
+                    columnsInLandscape: Int(settings.columnsInLandscape),
+                    spacing: CGFloat(settings.spacing),
+                    animation: settings.animation
+                )
+                .scrollOptions(direction: scrollDirection)
+                .padding(settings.padding)
+            }
 
         #else
 
-        return WaterfallGrid(rectangles) { rectangle in
-            RectangleView(rectangle: rectangle, scrollDirection: scrollDirection)
-        }
-        .gridStyle(
-            columns: Int(settings.columns),
-            spacing: CGFloat(settings.spacing),
-            padding: settings.padding,
-            animation: settings.animation
-        )
-        .scrollOptions(direction: scrollDirection, showsIndicators: settings.showsIndicators)
+        return
+            ScrollView(scrollDirection, showsIndicators: settings.showsIndicators) {
+                WaterfallGrid(rectangles) { rectangle in
+                    RectangleView(rectangle: rectangle, scrollDirection: scrollDirection)
+                }
+                .gridStyle(
+                    columns: Int(settings.columns),
+                    spacing: CGFloat(settings.spacing),
+                    animation: settings.animation
+                )
+                .scrollOptions(direction: scrollDirection)
+                .padding(settings.padding)
+            }
         
         #endif
         

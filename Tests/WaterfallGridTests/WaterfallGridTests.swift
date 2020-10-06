@@ -232,43 +232,25 @@ class WaterfallGridTests: XCTestCase {
 
     func test_columnWidth_verticalScrolling() {
         // Given
-        let edgeInsets: [EdgeInsets] = [
-            .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-            .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-            .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-            .init(top: 0, leading: 4, bottom: 0, trailing: 4),
-            .init(top: 0, leading: 4, bottom: 0, trailing: 6.5),
-            .init(top: 0, leading: 6.5, bottom: 0, trailing: 2)
-        ]
-
         let geometrySize = CGSize(width: 400, height: 600)
-        let testCases: [(CGFloat, Int, CGFloat, EdgeInsets, UInt)] = [
-            // expected  | columns  |   spacing   |    padding    | line
-            (400,           1,          0,          edgeInsets[0],   #line),
-            (400,           1,          8,          edgeInsets[1],   #line),
-            (400,           1,          10.5,       edgeInsets[2],   #line),
-            (392,           1,          0,          edgeInsets[3],   #line),
-            (389.5,         1,          0,          edgeInsets[4],   #line),
-            (391.5,         1,          8,          edgeInsets[5],   #line),
+        let testCases: [(CGFloat, Int, CGFloat, UInt)] = [
+            // expected  | columns  |   spacing   | line
+            (400,           1,          0,          #line),
+            (400,           1,          8,          #line),
+            (400,           1,          10.5,       #line),
 
-            (200,           2,          0,          edgeInsets[0],   #line),
-            (196,           2,          8,          edgeInsets[1],   #line),
-            (194.75,        2,          10.5,       edgeInsets[2],   #line),
-            (196,           2,          0,          edgeInsets[3],   #line),
-            (194.75,        2,          0,          edgeInsets[4],   #line),
-            (191.75,        2,          8,          edgeInsets[5],   #line),
+            (200,           2,          0,          #line),
+            (196,           2,          8,          #line),
+            (194.75,        2,          10.5,       #line),
 
-            (133.33,        3,          0,          edgeInsets[0],   #line),
-            (128,           3,          8,          edgeInsets[1],   #line),
-            (126.33,        3,          10.5,       edgeInsets[2],   #line),
-            (130.66,        3,          0,          edgeInsets[3],   #line),
-            (129.83,        3,          0,          edgeInsets[4],   #line),
-            (125.16,        3,          8,          edgeInsets[5],   #line)
+            (133.33,        3,          0,          #line),
+            (128,           3,          8,          #line),
+            (126.33,        3,          10.5,       #line)
         ]
 
-        for (expected, columns, spacing, padding, line) in testCases {
+        for (expected, columns, spacing, line) in testCases {
             // When
-            let result = sut.columnWidth(columns: columns, spacing: spacing, padding: padding, scrollDirection: .vertical, geometrySize: geometrySize)
+            let result = sut.columnWidth(columns: columns, spacing: spacing, scrollDirection: .vertical, geometrySize: geometrySize)
             // Then
             XCTAssertEqual(expected, result, accuracy: 0.01, line: line)
         }
@@ -276,43 +258,25 @@ class WaterfallGridTests: XCTestCase {
 
     func test_columnWidth_horizontalScrolling() {
         // Given
-        let edgeInsets: [EdgeInsets] = [
-            .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-            .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-            .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-            .init(top: 4, leading: 0, bottom: 4, trailing: 0),
-            .init(top: 4, leading: 0, bottom: 6.5, trailing: 0),
-            .init(top: 6.5, leading: 0, bottom: 2, trailing: 0)
-        ]
-
         let geometrySize = CGSize(width: 400, height: 600)
-        let testCases: [(CGFloat, Int, CGFloat, EdgeInsets, UInt)] = [
-            // expected  | columns  |   spacing   |    padding    | line
-            (600,           1,          0,          edgeInsets[0],   #line),
-            (600,           1,          8,          edgeInsets[1],   #line),
-            (600,           1,          10.5,       edgeInsets[2],   #line),
-            (592,           1,          0,          edgeInsets[3],   #line),
-            (589.5,         1,          0,          edgeInsets[4],   #line),
-            (591.5,         1,          8,          edgeInsets[5],   #line),
+        let testCases: [(CGFloat, Int, CGFloat, UInt)] = [
+            // expected  | columns  |   spacing   | line
+            (600,           1,          0,          #line),
+            (600,           1,          8,          #line),
+            (600,           1,          10.5,       #line),
 
-            (300,           2,          0,          edgeInsets[0],   #line),
-            (296,           2,          8,          edgeInsets[1],   #line),
-            (294.75,        2,          10.5,       edgeInsets[2],   #line),
-            (296,           2,          0,          edgeInsets[3],   #line),
-            (294.75,        2,          0,          edgeInsets[4],   #line),
-            (291.75,        2,          8,          edgeInsets[5],   #line),
+            (300,           2,          0,          #line),
+            (296,           2,          8,          #line),
+            (294.75,        2,          10.5,       #line),
 
-            (200,           3,          0,          edgeInsets[0],   #line),
-            (194.66,        3,          8,          edgeInsets[1],   #line),
-            (193,           3,          10.5,       edgeInsets[2],   #line),
-            (197.33,        3,          0,          edgeInsets[3],   #line),
-            (196.5,         3,          0,          edgeInsets[4],   #line),
-            (191.83,        3,          8,          edgeInsets[5],   #line)
+            (200,           3,          0,          #line),
+            (194.66,        3,          8,          #line),
+            (193,           3,          10.5,       #line)
         ]
 
-        for (expected, columns, spacing, padding, line) in testCases {
+        for (expected, columns, spacing, line) in testCases {
             // When
-            let result = sut.columnWidth(columns: columns, spacing: spacing, padding: padding, scrollDirection: .horizontal, geometrySize: geometrySize)
+            let result = sut.columnWidth(columns: columns, spacing: spacing, scrollDirection: .horizontal, geometrySize: geometrySize)
             // Then
             XCTAssertEqual(expected, result, accuracy: 0.01, line: line)
         }

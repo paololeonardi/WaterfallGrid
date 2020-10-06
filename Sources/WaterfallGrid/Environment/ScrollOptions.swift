@@ -8,11 +8,10 @@ import SwiftUI
 
 struct ScrollOptions {
     let direction: Axis.Set
-    let showsIndicators: Bool
 }
 
 struct ScrollOptionsKey: EnvironmentKey {
-    static let defaultValue = ScrollOptions(direction: .vertical, showsIndicators: true)
+    static let defaultValue = ScrollOptions(direction: .vertical)
 }
 
 extension EnvironmentValues {
