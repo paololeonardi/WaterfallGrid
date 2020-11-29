@@ -33,31 +33,6 @@ A waterfall grid layout view for SwiftUI.
 - Xcode 11.0+
 - Swift 5.1+
 
-## Installation
-
-### Swift Package Manager
-
-The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
-
-Once you have your Swift package set up, adding WaterfallGrid as a dependency is as easy as adding it to the `dependencies` value of your `Package.swift`.
-
-```swift
-dependencies: [
-  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "0.4.0")
-]
-```
-
-### CocoaPods
-
-You can install `WaterfallGrid` via CocoaPods by adding the following line to your `Podfile`:
-
-```ruby
-pod 'WaterfallGrid', '~> 0.4.0'
-```
-
-Run the `pod install` command to download the library
-and integrate it into your Xcode project.
-
 ## Usage
 
 ### Initialization
@@ -118,31 +93,34 @@ WaterfallGrid(cards, content: CardView.init)
 
 ```swift
 WaterfallGrid(rectangles, content: RectangleView.init)
-.gridStyle(
-  spacing: 8,
-  padding: EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
-)
+.gridStyle(spacing: 8)
+.padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
 ```
 
 **Animation**
 
 ```swift
 WaterfallGrid(rectangles, content: RectangleView.init)
-.gridStyle(
-  animation: .easeInOut(duration: 0.5)
-)
+.gridStyle(animation: .easeInOut(duration: 0.5))
 ```
 
 ### Scroll Behaviour
 
-**Scroll direction & Indicators**
+**Embed in ScrollView & Indicators option**
 
 ```swift
-WaterfallGrid(rectangles, content: RectangleView.init)
-.scrollOptions(
-  direction: .horizontal,
-  showsIndicators: true
-)
+ScrollView(showsIndicators: true) {
+  WaterfallGrid(rectangles, content: RectangleView.init)
+}
+```
+
+**Horizontal Scroll Direction**
+
+```swift
+ScrollView(.horizontal) {
+  WaterfallGrid(rectangles, content: RectangleView.init)
+  .scrollOptions(direction: .horizontal)
+}
 ```
 <p align="center">
 	<img src="https://paololeonardi.github.io/waterfallgrid/resources/animation4.gif" alt="Animation Demo 4"/>
@@ -152,20 +130,19 @@ WaterfallGrid(rectangles, content: RectangleView.init)
 ### A Complete Example
 
 ```swift
-WaterfallGrid(cards) { card in
-  CardView(card: card)
+ScrollView(.horizontal, showsIndicators: false) {
+  WaterfallGrid(cards) { card in
+    CardView(card: card)
+  }
+  .gridStyle(
+    columnsInPortrait: 2,
+    columnsInLandscape: 3,
+    spacing: 8,
+    animation: .easeInOut(duration: 0.5)
+  )
+  .scrollOptions(direction: .horizontal)
+  .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
 }
-.gridStyle(
-  columnsInPortrait: 2,
-  columnsInLandscape: 3,
-  spacing: 8,
-  padding: EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8),
-  animation: .easeInOut(duration: 0.5)
-)
-.scrollOptions(
-  direction: .horizontal,
-  showsIndicators: true
-)
 ```
 
 
@@ -183,6 +160,39 @@ Explore the `WaterfallGridSample` app for some more detailed and interactive exa
 <p align="center">
 	<img src="https://paololeonardi.github.io/waterfallgrid/resources/demo2.png" alt="Image Demo 2"/>
 </p>
+
+## Installation
+
+### Swift Package Manager
+
+**App dependency**
+
+select File > Swift Packages > Add Package Dependency and enter the repository URL ([Adding Package Dependencies to Your App](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app))
+
+**Package dependency**
+
+Add it as a dependency within your `Package.swift` manifest:
+
+```swift
+dependencies: [
+  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "1.0.0")
+]
+```
+
+### CocoaPods
+
+You can install `WaterfallGrid` via CocoaPods by adding the following line to your `Podfile`:
+
+```ruby
+pod 'WaterfallGrid', '~> 1.0.0'
+```
+
+Run the `pod install` command to download the library
+and integrate it into your Xcode project.
+
+## Migration Guides
+
+- [WaterfallGrid 1.0.0 Migration Guide](https://github.com/paololeonardi/WaterfallGrid/wiki/WaterfallGrid-1.0.0-Migration-Guide)
 
 ## Versioning
 
