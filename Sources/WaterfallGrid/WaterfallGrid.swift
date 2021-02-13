@@ -30,12 +30,13 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                 self.grid(in: geometry)
                     .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
                         DispatchQueue.global(qos: .userInteractive).async {
-                            let alignmentGuides = self.calculateAlignmentGuides(columns: self.style.columns,
-                                                                                spacing: self.style.spacing,
-                                                                                scrollDirection: self.scrollOptions.direction,
-                                                                                preferences: preferences)
+                            let (alignmentGuides, gridHeight) = self.alignmentsAndGridHeight(columns: self.style.columns,
+                                                                                             spacing: self.style.spacing,
+                                                                                             scrollDirection: self.scrollOptions.direction,
+                                                                                             preferences: preferences)
                             DispatchQueue.main.async {
                                 self.alignmentGuides = alignmentGuides
+                                self.gridHeight = gridHeight
                             }
                         }
                     })
@@ -65,7 +66,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
 
     // MARK: - Helpers
 
-    func calculateAlignmentGuides(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, preferences: [ElementPreferenceData]) -> [AnyHashable: CGPoint] {
+    func alignmentsAndGridHeight(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, preferences: [ElementPreferenceData]) -> ([AnyHashable: CGPoint], CGFloat) {
         var heights = Array(repeating: CGFloat(0), count: columns)
         var alignmentGuides = [AnyHashable: CGPoint]()
 
@@ -82,9 +83,9 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
             }
         }
         
-        gridHeight = (heights.max() ?? spacing) - spacing
+        let gridHeight = max(0, (heights.max() ?? spacing) - spacing)
         
-        return alignmentGuides
+        return (alignmentGuides, gridHeight)
     }
 
     func columnWidth(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, geometrySize: CGSize) -> CGFloat {

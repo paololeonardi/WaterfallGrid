@@ -22,7 +22,7 @@ class WaterfallGridTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_calculateAlignmentGuides_withSpacingAndVerticalScroll() {
+    func test_alignmentsAndGridHeight_withSpacingAndVerticalScroll() {
         // Given
         let width = 40
         let spacing: CGFloat = 8
@@ -59,22 +59,23 @@ class WaterfallGridTests: XCTestCase {
             4: CGPoint(x: -48, y: -88)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], Int, UInt) ] = [
-            // expected             | columns |  line
-            (alignmentsOneColumn,       1,      #line),
-            (alignmentsTwoColumns,      2,      #line),
-            (alignmentsThreeColumns,    3,      #line)
+        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+            // expectedAlignments    | expectedGridHeight  | columns |  line
+            (alignmentsOneColumn,           422.0,              1,      #line),
+            (alignmentsTwoColumns,          228.0,              2,      #line),
+            (alignmentsThreeColumns,        188.0,              3,      #line)
         ]
 
-        for (expected, columns, line) in testCases {
+        for (expectedAlignments, expectedGridHeight, columns, line) in testCases {
             // When
-            let result = sut.calculateAlignmentGuides(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
+            let (alignments, gridHeight) = sut.alignmentsAndGridHeight(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
             // Then
-            XCTAssertEqual(expected, result, line: line)
+            XCTAssertEqual(expectedAlignments, alignments, line: line)
+            XCTAssertEqual(expectedGridHeight, gridHeight, line: line)
         }
     }
 
-    func test_calculateAlignmentGuides_withSpacingAndHorizontalScroll() {
+    func test_alignmentsAndGridHeight_withSpacingAndHorizontalScroll() {
         // Given
         let height = 40
         let spacing: CGFloat = 8
@@ -111,22 +112,23 @@ class WaterfallGridTests: XCTestCase {
             4: CGPoint(x: -88, y: -48)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], Int, UInt) ] = [
-            // expected             | columns |  line
-            (alignmentsOneColumn,       1,      #line),
-            (alignmentsTwoColumns,      2,      #line),
-            (alignmentsThreeColumns,    3,      #line)
+        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+            // expectedAlignments    | expectedGridHeight  | columns |  line
+            (alignmentsOneColumn,           422.0,              1,      #line),
+            (alignmentsTwoColumns,          228.0,              2,      #line),
+            (alignmentsThreeColumns,        188.0,              3,      #line)
         ]
 
-        for (expected, columns, line) in testCases {
+        for (expectedAlignments, expectedGridHeight, columns, line) in testCases {
             // When
-            let result = sut.calculateAlignmentGuides(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
+            let (alignments, gridHeight) = sut.alignmentsAndGridHeight(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
             // Then
-            XCTAssertEqual(expected, result, line: line)
+            XCTAssertEqual(expectedAlignments, alignments, line: line)
+            XCTAssertEqual(expectedGridHeight, gridHeight, line: line)
         }
     }
 
-    func test_calculateAlignmentGuides_withoutSpacingAndVerticalScroll() {
+    func test_alignmentsAndGridHeight_withoutSpacingAndVerticalScroll() {
         // Given
         let width = 40
         let spacing: CGFloat = 0
@@ -163,22 +165,23 @@ class WaterfallGridTests: XCTestCase {
             4: CGPoint(x: -40, y: -80)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], Int, UInt) ] = [
-            // expected             | columns |  line
-            (alignmentsOneColumn,       1,      #line),
-            (alignmentsTwoColumns,      2,      #line),
-            (alignmentsThreeColumns,    3,      #line)
+        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+            // expectedAlignments    | expectedGridHeight  | columns |  line
+            (alignmentsOneColumn,           390.0,              1,      #line),
+            (alignmentsTwoColumns,          220.0,              2,      #line),
+            (alignmentsThreeColumns,        180.0,              3,      #line)
         ]
 
-        for (expected, columns, line) in testCases {
+        for (expectedAlignments, expectedGridHeight, columns, line) in testCases {
             // When
-            let result = sut.calculateAlignmentGuides(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
+            let (alignments, gridHeight) = sut.alignmentsAndGridHeight(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
             // Then
-            XCTAssertEqual(expected, result, line: line)
+            XCTAssertEqual(expectedAlignments, alignments, line: line)
+            XCTAssertEqual(expectedGridHeight, gridHeight, line: line)
         }
     }
 
-    func test_calculateAlignmentGuides_withoutSpacingAndHorizontalScroll() {
+    func test_alignmentsAndGridHeight_withoutSpacingAndHorizontalScroll() {
         // Given
         let height = 40
         let spacing: CGFloat = 0
@@ -215,18 +218,63 @@ class WaterfallGridTests: XCTestCase {
             4: CGPoint(x: -80, y: -40)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], Int, UInt) ] = [
-            // expected             | columns |  line
-            (alignmentsOneColumn,       1,      #line),
-            (alignmentsTwoColumns,      2,      #line),
-            (alignmentsThreeColumns,    3,      #line)
+        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+            // expectedAlignments    | expectedGridHeight  | columns |  line
+            (alignmentsOneColumn,           390.0,              1,      #line),
+            (alignmentsTwoColumns,          220.0,              2,      #line),
+            (alignmentsThreeColumns,        180.0,              3,      #line)
         ]
 
-        for (expected, columns, line) in testCases {
+        for (expectedAlignments, expectedGridHeight, columns, line) in testCases {
             // When
-            let result = sut.calculateAlignmentGuides(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
+            let (alignments, gridHeight) = sut.alignmentsAndGridHeight(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
             // Then
-            XCTAssertEqual(expected, result, line: line)
+            XCTAssertEqual(expectedAlignments, alignments, line: line)
+            XCTAssertEqual(expectedGridHeight, gridHeight, line: line)
+        }
+    }
+
+    func test_alignmentsAndGridHeight_emptyPreferencces_withSpacingAndVerticalScroll() {
+        // Given
+        let spacing: CGFloat = 8
+        let scrollDirection = Axis.Set.vertical
+        let preferences: [ElementPreferenceData] = []
+
+        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+            // expectedAlignments    | expectedGridHeight  | columns |  line
+            ([:],                           0.0,                1,      #line),
+            ([:],                           0.0,                2,      #line),
+            ([:],                           0.0,                3,      #line)
+        ]
+
+        for (expectedAlignments, expectedGridHeight, columns, line) in testCases {
+            // When
+            let (alignments, gridHeight) = sut.alignmentsAndGridHeight(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
+            // Then
+            XCTAssertEqual(expectedAlignments, alignments, line: line)
+            XCTAssertEqual(expectedGridHeight, gridHeight, line: line)
+        }
+    }
+
+    func test_alignmentsAndGridHeight_emptyPreferencces_withoutSpacingAndVerticalScroll() {
+        // Given
+        let spacing: CGFloat = 0
+        let scrollDirection = Axis.Set.vertical
+        let preferences: [ElementPreferenceData] = []
+
+        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+            // expectedAlignments    | expectedGridHeight  | columns |  line
+            ([:],                           0.0,                1,      #line),
+            ([:],                           0.0,                2,      #line),
+            ([:],                           0.0,                3,      #line)
+        ]
+
+        for (expectedAlignments, expectedGridHeight, columns, line) in testCases {
+            // When
+            let (alignments, gridHeight) = sut.alignmentsAndGridHeight(columns: columns, spacing: spacing, scrollDirection: scrollDirection, preferences: preferences)
+            // Then
+            XCTAssertEqual(expectedAlignments, alignments, line: line)
+            XCTAssertEqual(expectedGridHeight, gridHeight, line: line)
         }
     }
 
