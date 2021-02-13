@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "WaterfallGrid"
-  spec.version = "1.0.0"
+  spec.version = "1.0.1"
   spec.summary = "A waterfall grid layout view for SwiftUI."
   spec.homepage = "https://github.com/paololeonardi/WaterfallGrid"
 
