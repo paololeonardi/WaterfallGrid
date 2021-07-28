@@ -206,7 +206,7 @@ Contributions are more than welcome. Please create a GitHub issue before submitt
 * [Paolo Leonardi](https://github.com/paololeonardi) ([@paololeonardi](https://twitter.com/paololeonardi))
 
 ## Credits
-WaterfallGrid was ispired by the following projects:
+WaterfallGrid was inspired by the following projects:
 
 * QGrid - https://github.com/Q-Mobile/QGrid
 * Grid - https://github.com/SwiftUIExtensions/Grid
