@@ -25,7 +25,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     }
     
     public var body: some View {
-        VStack {
+        LazyVStack {
             GeometryReader { geometry in
                 self.grid(in: geometry)
                     .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
