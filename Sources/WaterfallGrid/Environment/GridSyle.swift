@@ -14,7 +14,7 @@ struct GridSyle {
     let animation: Animation?
 
     var columns: Int {
-        #if os(OSX) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(OSX) || os(tvOS) || targetEnvironment(macCatalyst) || os(visionOS)
         return columnsInLandscape
         #elseif os(watchOS)
         return columnsInPortrait
