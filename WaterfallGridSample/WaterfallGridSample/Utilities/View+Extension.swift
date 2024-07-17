@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     
-    public func customNavigationBarTitle(_ title: Text, displayMode: NavigationBarItem.TitleDisplayMode) -> some View {
+    func customNavigationBarTitle(_ title: Text, displayMode: NavigationBarItem.TitleDisplayMode) -> some View {
         #if os(tvOS)
         return self
         #else
@@ -18,7 +18,7 @@ extension View {
         #endif
     }
     
-    public func customNavigationBarItems<L, T>(leading: L, trailing: T) -> some View where L : View, T : View {
+    func customNavigationBarItems<L, T>(leading: L, trailing: T) -> some View where L : View, T : View {
         #if os(tvOS)
         return VStack(alignment: .leading) {
             HStack() {
