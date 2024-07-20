@@ -13,6 +13,7 @@ struct GridSyle {
     let spacing: CGFloat
     let animation: Animation?
 
+    @MainActor
     var columns: Int {
         #if os(OSX) || os(tvOS) || targetEnvironment(macCatalyst) || os(visionOS)
         return columnsInLandscape

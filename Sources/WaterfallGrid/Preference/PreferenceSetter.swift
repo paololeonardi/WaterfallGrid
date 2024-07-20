@@ -6,12 +6,12 @@
 
 import SwiftUI
 
-struct PreferenceSetter<ID: Hashable>: View {
-    var id: ID
+struct PreferenceSetter: View {
+    var id: AnyHashableAndSendable
     var body: some View {
         GeometryReader { geometry in
             Color.clear
-                .preference(key: ElementPreferenceKey.self, value: [ElementPreferenceData(id: AnyHashable(self.id), size: geometry.size)])
+                .preference(key: ElementPreferenceKey.self, value: [ElementPreferenceData(id: self.id, size: geometry.size)])
         }
     }
 }

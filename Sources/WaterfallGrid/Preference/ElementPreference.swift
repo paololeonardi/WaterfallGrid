@@ -6,15 +6,15 @@
 
 import SwiftUI
 
-struct ElementPreferenceData: Equatable {
-    let id: AnyHashable
+struct ElementPreferenceData: Equatable, Sendable {
+    let id: AnyHashableAndSendable
     let size: CGSize
 }
 
 struct ElementPreferenceKey: PreferenceKey {
     typealias Value = [ElementPreferenceData]
 
-    static var defaultValue: [ElementPreferenceData] = []
+    static let defaultValue: [ElementPreferenceData] = []
 
     static func reduce(value: inout [ElementPreferenceData], nextValue: () -> [ElementPreferenceData]) {
         value.append(contentsOf: nextValue())

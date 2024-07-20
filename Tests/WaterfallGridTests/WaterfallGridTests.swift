@@ -28,38 +28,38 @@ class WaterfallGridTests: XCTestCase {
         let spacing: CGFloat = 8
         let scrollDirection = Axis.Set.vertical
         let preferences = [
-            ElementPreferenceData(id: 0, size: CGSize(width: width, height: 100)),
-            ElementPreferenceData(id: 1, size: CGSize(width: width, height: 80)),
-            ElementPreferenceData(id: 2, size: CGSize(width: width, height: 60)),
-            ElementPreferenceData(id: 3, size: CGSize(width: width, height: 120)),
-            ElementPreferenceData(id: 4, size: CGSize(width: width, height: 30))
+            ElementPreferenceData(id: AnyHashableAndSendable(0), size: CGSize(width: width, height: 100)),
+            ElementPreferenceData(id: AnyHashableAndSendable(1), size: CGSize(width: width, height: 80)),
+            ElementPreferenceData(id: AnyHashableAndSendable(2), size: CGSize(width: width, height: 60)),
+            ElementPreferenceData(id: AnyHashableAndSendable(3), size: CGSize(width: width, height: 120)),
+            ElementPreferenceData(id: AnyHashableAndSendable(4), size: CGSize(width: width, height: 30))
         ]
 
-        let alignmentsOneColumn: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: 0, y: -108),
-            2: CGPoint(x: 0, y: -196),
-            3: CGPoint(x: 0, y: -264),
-            4: CGPoint(x: 0, y: -392)
+        let alignmentsOneColumn: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: 0, y: -108),
+            AnyHashableAndSendable(2): CGPoint(x: 0, y: -196),
+            AnyHashableAndSendable(3): CGPoint(x: 0, y: -264),
+            AnyHashableAndSendable(4): CGPoint(x: 0, y: -392)
         ]
 
-        let alignmentsTwoColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: -48, y: 0),
-            2: CGPoint(x: -48, y: -88),
-            3: CGPoint(x: 0, y: -108),
-            4: CGPoint(x: -48, y: -156)
+        let alignmentsTwoColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: -48, y: 0),
+            AnyHashableAndSendable(2): CGPoint(x: -48, y: -88),
+            AnyHashableAndSendable(3): CGPoint(x: 0, y: -108),
+            AnyHashableAndSendable(4): CGPoint(x: -48, y: -156)
         ]
 
-        let alignmentsThreeColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: -48, y: 0),
-            2: CGPoint(x: -96, y: 0),
-            3: CGPoint(x: -96, y: -68),
-            4: CGPoint(x: -48, y: -88)
+        let alignmentsThreeColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: -48, y: 0),
+            AnyHashableAndSendable(2): CGPoint(x: -96, y: 0),
+            AnyHashableAndSendable(3): CGPoint(x: -96, y: -68),
+            AnyHashableAndSendable(4): CGPoint(x: -48, y: -88)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+        let testCases: [ ([AnyHashableAndSendable : CGPoint], CGFloat, Int, UInt) ] = [
             // expectedAlignments    | expectedGridHeight  | columns |  line
             (alignmentsOneColumn,           422.0,              1,      #line),
             (alignmentsTwoColumns,          228.0,              2,      #line),
@@ -81,38 +81,38 @@ class WaterfallGridTests: XCTestCase {
         let spacing: CGFloat = 8
         let scrollDirection = Axis.Set.horizontal
         let preferences = [
-            ElementPreferenceData(id: 0, size: CGSize(width: 100, height: height)),
-            ElementPreferenceData(id: 1, size: CGSize(width: 80, height: height)),
-            ElementPreferenceData(id: 2, size: CGSize(width: 60, height: height)),
-            ElementPreferenceData(id: 3, size: CGSize(width: 120, height: height)),
-            ElementPreferenceData(id: 4, size: CGSize(width: 30, height: height))
+            ElementPreferenceData(id: AnyHashableAndSendable(0), size: CGSize(width: 100, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(1), size: CGSize(width: 80, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(2), size: CGSize(width: 60, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(3), size: CGSize(width: 120, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(4), size: CGSize(width: 30, height: height))
         ]
 
-        let alignmentsOneColumn: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: -108, y: 0),
-            2: CGPoint(x: -196, y: 0),
-            3: CGPoint(x: -264, y: 0),
-            4: CGPoint(x: -392, y: 0)
+        let alignmentsOneColumn: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: -108, y: 0),
+            AnyHashableAndSendable(2): CGPoint(x: -196, y: 0),
+            AnyHashableAndSendable(3): CGPoint(x: -264, y: 0),
+            AnyHashableAndSendable(4): CGPoint(x: -392, y: 0)
         ]
 
-        let alignmentsTwoColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: 0, y: -48),
-            2: CGPoint(x: -88, y: -48),
-            3: CGPoint(x: -108, y: 0),
-            4: CGPoint(x: -156, y: -48)
+        let alignmentsTwoColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: 0, y: -48),
+            AnyHashableAndSendable(2): CGPoint(x: -88, y: -48),
+            AnyHashableAndSendable(3): CGPoint(x: -108, y: 0),
+            AnyHashableAndSendable(4): CGPoint(x: -156, y: -48)
         ]
 
-        let alignmentsThreeColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: 0, y: -48),
-            2: CGPoint(x: 0, y: -96),
-            3: CGPoint(x: -68, y: -96),
-            4: CGPoint(x: -88, y: -48)
+        let alignmentsThreeColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: 0, y: -48),
+            AnyHashableAndSendable(2): CGPoint(x: 0, y: -96),
+            AnyHashableAndSendable(3): CGPoint(x: -68, y: -96),
+            AnyHashableAndSendable(4): CGPoint(x: -88, y: -48)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+        let testCases: [ ([AnyHashableAndSendable : CGPoint], CGFloat, Int, UInt) ] = [
             // expectedAlignments    | expectedGridHeight  | columns |  line
             (alignmentsOneColumn,           422.0,              1,      #line),
             (alignmentsTwoColumns,          228.0,              2,      #line),
@@ -134,38 +134,38 @@ class WaterfallGridTests: XCTestCase {
         let spacing: CGFloat = 0
         let scrollDirection = Axis.Set.vertical
         let preferences = [
-            ElementPreferenceData(id: 0, size: CGSize(width: width, height: 100)),
-            ElementPreferenceData(id: 1, size: CGSize(width: width, height: 80)),
-            ElementPreferenceData(id: 2, size: CGSize(width: width, height: 60)),
-            ElementPreferenceData(id: 3, size: CGSize(width: width, height: 120)),
-            ElementPreferenceData(id: 4, size: CGSize(width: width, height: 30))
+            ElementPreferenceData(id: AnyHashableAndSendable(0), size: CGSize(width: width, height: 100)),
+            ElementPreferenceData(id: AnyHashableAndSendable(1), size: CGSize(width: width, height: 80)),
+            ElementPreferenceData(id: AnyHashableAndSendable(2), size: CGSize(width: width, height: 60)),
+            ElementPreferenceData(id: AnyHashableAndSendable(3), size: CGSize(width: width, height: 120)),
+            ElementPreferenceData(id: AnyHashableAndSendable(4), size: CGSize(width: width, height: 30))
         ]
 
-        let alignmentsOneColumn: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: 0, y: -100),
-            2: CGPoint(x: 0, y: -180),
-            3: CGPoint(x: 0, y: -240),
-            4: CGPoint(x: 0, y: -360)
+        let alignmentsOneColumn: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: 0, y: -100),
+            AnyHashableAndSendable(2): CGPoint(x: 0, y: -180),
+            AnyHashableAndSendable(3): CGPoint(x: 0, y: -240),
+            AnyHashableAndSendable(4): CGPoint(x: 0, y: -360)
         ]
 
-        let alignmentsTwoColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: -40, y: 0),
-            2: CGPoint(x: -40, y: -80),
-            3: CGPoint(x: 0, y: -100),
-            4: CGPoint(x: -40, y: -140)
+        let alignmentsTwoColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: -40, y: 0),
+            AnyHashableAndSendable(2): CGPoint(x: -40, y: -80),
+            AnyHashableAndSendable(3): CGPoint(x: 0, y: -100),
+            AnyHashableAndSendable(4): CGPoint(x: -40, y: -140)
         ]
 
-        let alignmentsThreeColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: -40, y: 0),
-            2: CGPoint(x: -80, y: 0),
-            3: CGPoint(x: -80, y: -60),
-            4: CGPoint(x: -40, y: -80)
+        let alignmentsThreeColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: -40, y: 0),
+            AnyHashableAndSendable(2): CGPoint(x: -80, y: 0),
+            AnyHashableAndSendable(3): CGPoint(x: -80, y: -60),
+            AnyHashableAndSendable(4): CGPoint(x: -40, y: -80)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+        let testCases: [ ([AnyHashableAndSendable : CGPoint], CGFloat, Int, UInt) ] = [
             // expectedAlignments    | expectedGridHeight  | columns |  line
             (alignmentsOneColumn,           390.0,              1,      #line),
             (alignmentsTwoColumns,          220.0,              2,      #line),
@@ -187,38 +187,38 @@ class WaterfallGridTests: XCTestCase {
         let spacing: CGFloat = 0
         let scrollDirection = Axis.Set.horizontal
         let preferences = [
-            ElementPreferenceData(id: 0, size: CGSize(width: 100, height: height)),
-            ElementPreferenceData(id: 1, size: CGSize(width: 80, height: height)),
-            ElementPreferenceData(id: 2, size: CGSize(width: 60, height: height)),
-            ElementPreferenceData(id: 3, size: CGSize(width: 120, height: height)),
-            ElementPreferenceData(id: 4, size: CGSize(width: 30, height: height))
+            ElementPreferenceData(id: AnyHashableAndSendable(0), size: CGSize(width: 100, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(1), size: CGSize(width: 80, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(2), size: CGSize(width: 60, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(3), size: CGSize(width: 120, height: height)),
+            ElementPreferenceData(id: AnyHashableAndSendable(4), size: CGSize(width: 30, height: height))
         ]
 
-        let alignmentsOneColumn: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: -100, y: 0),
-            2: CGPoint(x: -180, y: 0),
-            3: CGPoint(x: -240, y: 0),
-            4: CGPoint(x: -360, y: 0)
+        let alignmentsOneColumn: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: -100, y: 0),
+            AnyHashableAndSendable(2): CGPoint(x: -180, y: 0),
+            AnyHashableAndSendable(3): CGPoint(x: -240, y: 0),
+            AnyHashableAndSendable(4): CGPoint(x: -360, y: 0)
         ]
 
-        let alignmentsTwoColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: 0, y: -40),
-            2: CGPoint(x:  -80, y:-40),
-            3: CGPoint(x: -100, y: 0),
-            4: CGPoint(x: -140, y: -40)
+        let alignmentsTwoColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: 0, y: -40),
+            AnyHashableAndSendable(2): CGPoint(x:  -80, y:-40),
+            AnyHashableAndSendable(3): CGPoint(x: -100, y: 0),
+            AnyHashableAndSendable(4): CGPoint(x: -140, y: -40)
         ]
 
-        let alignmentsThreeColumns: [AnyHashable : CGPoint] = [
-            0: CGPoint(x: 0, y: 0),
-            1: CGPoint(x: 0, y: -40),
-            2: CGPoint(x: 0, y: -80),
-            3: CGPoint(x: -60, y: -80),
-            4: CGPoint(x: -80, y: -40)
+        let alignmentsThreeColumns: [AnyHashableAndSendable : CGPoint] = [
+            AnyHashableAndSendable(0): CGPoint(x: 0, y: 0),
+            AnyHashableAndSendable(1): CGPoint(x: 0, y: -40),
+            AnyHashableAndSendable(2): CGPoint(x: 0, y: -80),
+            AnyHashableAndSendable(3): CGPoint(x: -60, y: -80),
+            AnyHashableAndSendable(4): CGPoint(x: -80, y: -40)
         ]
 
-        let testCases: [ ([AnyHashable : CGPoint], CGFloat, Int, UInt) ] = [
+        let testCases: [ ([AnyHashableAndSendable : CGPoint], CGFloat, Int, UInt) ] = [
             // expectedAlignments    | expectedGridHeight  | columns |  line
             (alignmentsOneColumn,           390.0,              1,      #line),
             (alignmentsTwoColumns,          220.0,              2,      #line),

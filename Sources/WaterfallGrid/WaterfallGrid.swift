@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A container that presents items of variable heights arranged in a grid.
 @available(iOS 13, OSX 10.15, tvOS 13, visionOS 1, watchOS 6, *)
-public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable {
+public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable & Sendable {
 
     @Environment(\.gridStyle) private var style
     @Environment(\.scrollOptions) private var scrollOptions
@@ -20,7 +20,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
     @State private var loaded = false
     @State private var gridHeight: CGFloat = 0
 
-    @State private var alignmentGuides = [AnyHashable: CGPoint]() {
+    @State private var alignmentGuides = [AnyHashableAndSendable: CGPoint]() {
         didSet { loaded = !oldValue.isEmpty }
     }
     
@@ -29,12 +29,12 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
             GeometryReader { geometry in
                 self.grid(in: geometry)
                     .onPreferenceChange(ElementPreferenceKey.self, perform: { preferences in
-                        DispatchQueue.global(qos: .userInteractive).async {
-                            let (alignmentGuides, gridHeight) = self.alignmentsAndGridHeight(columns: self.style.columns,
-                                                                                             spacing: self.style.spacing,
-                                                                                             scrollDirection: self.scrollOptions.direction,
-                                                                                             preferences: preferences)
-                            DispatchQueue.main.async {
+                        Task.detached(priority: .userInitiated) {
+                            let (alignmentGuides, gridHeight) = await self.alignmentsAndGridHeight(columns: self.style.columns,
+                                                                                                   spacing: self.style.spacing,
+                                                                                                   scrollDirection: self.scrollOptions.direction,
+                                                                                                   preferences: preferences)
+                            await MainActor.run {
                                 self.alignmentGuides = alignmentGuides
                                 self.gridHeight = gridHeight
                             }
@@ -55,10 +55,10 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                     self.content(element)
                         .frame(width: self.scrollOptions.direction == .vertical ? columnWidth : nil,
                                height: self.scrollOptions.direction == .horizontal ? columnWidth : nil)
-                        .background(PreferenceSetter(id: element[keyPath: self.dataId]))
-                        .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.y ?? 0 })
-                        .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[element[keyPath: self.dataId]]?.x ?? 0 })
-                        .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
+                        .background(PreferenceSetter(id: AnyHashableAndSendable(element[keyPath: self.dataId])))
+                        .alignmentGuide(.top, computeValue: { _ in self.alignmentGuides[AnyHashableAndSendable(element[keyPath: self.dataId])]?.y ?? 0 })
+                        .alignmentGuide(.leading, computeValue: { _ in self.alignmentGuides[AnyHashableAndSendable(element[keyPath: self.dataId])]?.x ?? 0 })
+                        .opacity(self.alignmentGuides[AnyHashableAndSendable(element[keyPath: self.dataId])] != nil ? 1 : 0)
                 }
             }
             .animation(self.loaded ? self.style.animation : nil, value: UUID())
@@ -66,9 +66,9 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
 
     // MARK: - Helpers
 
-    func alignmentsAndGridHeight(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, preferences: [ElementPreferenceData]) -> ([AnyHashable: CGPoint], CGFloat) {
+    func alignmentsAndGridHeight(columns: Int, spacing: CGFloat, scrollDirection: Axis.Set, preferences: [ElementPreferenceData]) -> ([AnyHashableAndSendable: CGPoint], CGFloat) {
         var heights = Array(repeating: CGFloat(0), count: columns)
-        var alignmentGuides = [AnyHashable: CGPoint]()
+        var alignmentGuides = [AnyHashableAndSendable: CGPoint]()
 
         preferences.forEach { preference in
             if let minValue = heights.min(), let indexMin = heights.firstIndex(of: minValue) {
