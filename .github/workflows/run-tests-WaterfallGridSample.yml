@@ -22,3 +22,5 @@ jobs:
       run: xcodebuild -list
     - name: Show eligible build destinations
       run: xcodebuild -showdestinations -scheme WaterfallGrid
+    - name: Build for destination
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=iOS Simulator,OS=17.2,name=iPhone 15 Pro"
