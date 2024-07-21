@@ -20,3 +20,5 @@ jobs:
       run: xcodebuild -showsdks
     - name: Show buildable schemes
       run: xcodebuild -list
+    - name: Show eligible build destinations
+      run: xcodebuild -showdestinations -scheme WaterfallGrid
