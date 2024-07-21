@@ -40,10 +40,10 @@ jobs:
       run: xcodebuild test -scheme WaterfallGrid -destination "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro" | xcpretty
 
     - name: Build (macOS)
-      run: xcodebuild build -scheme WaterfallGrid -destination "platform=macOS,name=My Mac" | xcpretty
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=macOS,arch=arm64e,name=My Mac" | xcpretty
 
     - name: Build (Mac Catalyst)
-      run: xcodebuild build -scheme WaterfallGrid -destination "platform=macOS,variant=Mac Catalyst,name=My Mac" | xcpretty
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=macOS,arch=arm64e,variant=Mac Catalyst,name=My Mac" | xcpretty
 
     - name: Build (tvOS)
       run: xcodebuild build -scheme WaterfallGrid -destination "platform=tvOS Simulator,OS=17.5,name=Apple TV" | xcpretty
