@@ -13,6 +13,10 @@ jobs:
     - name: List available Xcode versions
       run: ls /Applications | grep Xcode
     - name: Set up Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+      run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
     - name: Show current version of Xcode
       run: xcodebuild -version
+    - name: Show Xcode embedded SDKs
+      run: xcodebuild -showsdks
+    - name: Show buildable schemes
+      run: xcodebuild -list
