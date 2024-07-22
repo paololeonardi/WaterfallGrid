@@ -37,6 +37,7 @@ extension View {
     /// - Parameter animation: The animation to apply when data change. If `animation` is `nil`, the grid doesn't animate.
     @available(OSX, unavailable)
     @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
     @available(watchOS, unavailable)
     public func gridStyle(
         columnsInPortrait: Int = 2,

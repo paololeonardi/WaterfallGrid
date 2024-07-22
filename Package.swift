@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.9
 
 //
 //  Copyright © 2019 Paolo Leonardi.
@@ -14,6 +14,7 @@ let package = Package(
         .iOS(.v13),
         .macOS(.v10_15),
         .tvOS(.v13),
+        .visionOS(.v1),
         .watchOS(.v6)
     ],
     products: [
