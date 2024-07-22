@@ -1,0 +1,52 @@
+name: WaterfallGridSample
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: macos-14
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: List available Xcode versions
+      run: ls /Applications | grep Xcode
+
+    - name: Set up Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+    - name: Show current version of Xcode
+      run: xcodebuild -version
+
+    - name: Show Xcode embedded SDKs
+      run: xcodebuild -showsdks
+
+    - name: Show buildable schemes
+      run: xcodebuild -list
+
+    - name: Show eligible build destinations
+      run: xcodebuild -showdestinations -scheme WaterfallGrid
+
+    - name: Install Bundler
+      run: gem install bundler
+
+    - name: Install xcpretty
+      run: gem install xcpretty
+
+    - name: Build and run tests (iOS)
+      run: xcodebuild test -scheme WaterfallGrid -destination "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro" | xcpretty
+
+    - name: Build (macOS)
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=macOS,arch=arm64e,name=My Mac" | xcpretty
+
+    - name: Build (Mac Catalyst)
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=macOS,arch=arm64e,variant=Mac Catalyst,name=My Mac" | xcpretty
+
+    - name: Build (tvOS)
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=tvOS Simulator,OS=17.5,name=Apple TV" | xcpretty
+
+    - name: Build (watchOS)
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=watchOS Simulator,OS=10.5,name=Apple Watch Ultra 2 (49mm)" | xcpretty
