@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "icon_512x512@2x.png",
       "idiom" : "vision",
       "scale" : "2x"
     }
