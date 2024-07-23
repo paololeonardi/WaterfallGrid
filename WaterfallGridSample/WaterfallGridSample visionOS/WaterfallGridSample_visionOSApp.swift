@@ -1,5 +1,7 @@
 //
-//  Copyright © 2024 Paolo Leonardi. All rights reserved.
+//  Copyright © 2024 Paolo Leonardi.
+//
+//  Licensed under the MIT license. See the LICENSE file for more info.
 //
 
 import SwiftUI
