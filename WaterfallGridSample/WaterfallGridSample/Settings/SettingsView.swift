@@ -24,76 +24,76 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            NavigationView {
-                Form() {
-                    Section(header: Text("Columns")) {
-                        #if os(iOS) && !targetEnvironment(macCatalyst)
-                        self.valueSelector(self.$newSettings.columnsInPortrait, bounds: 1...10, step: 1, label: "Portrait", in: geometry)
-                        self.valueSelector(self.$newSettings.columnsInLandscape, bounds: 1...10, step: 1, label: "Landscape", in: geometry)
-                        #else
-                        self.valueSelector(self.$newSettings.columnsInLandscape, bounds: 1...10, step: 1, label: "Columns", in: geometry)
-                        #endif
-                    }
+        NavigationView {
+            Form() {
+                Section(header: Text("Columns")) {
+                    #if os(iOS) && !targetEnvironment(macCatalyst)
+                    self.valueSelector(self.$newSettings.columnsInPortrait, bounds: 1...10, step: 1, label: "Portrait")
+                    self.valueSelector(self.$newSettings.columnsInLandscape, bounds: 1...10, step: 1, label: "Landscape")
+                    #else
+                    self.valueSelector(self.$newSettings.columnsInLandscape, bounds: 1...10, step: 1, label: "Columns")
+                    #endif
+                }
 
-                    Section(header: Text("Spacing")) {
-                        self.valueSelector(self.$newSettings.spacing, bounds: 0...40, step: 1, label: "Spacing", in: geometry)
-                    }
+                Section(header: Text("Spacing")) {
+                    self.valueSelector(self.$newSettings.spacing, bounds: 0...40, step: 1, label: "Spacing")
+                }
 
-                    Section(header: Text("Padding")) {
-                        self.valueSelector(self.$newSettings.padding.top, bounds: 0...40, step: 1, label: "Top", in: geometry)
-                        self.valueSelector(self.$newSettings.padding.leading, bounds: 0...40, step: 1, label: "Leading", in: geometry)
-                        self.valueSelector(self.$newSettings.padding.bottom, bounds: 0...40, step: 1, label: "Bottom", in: geometry)
-                        self.valueSelector(self.$newSettings.padding.trailing, bounds: 0...40, step: 1, label: "Trailing", in: geometry)
-                    }
+                Section(header: Text("Padding")) {
+                    self.valueSelector(self.$newSettings.padding.top, bounds: 0...40, step: 1, label: "Top")
+                    self.valueSelector(self.$newSettings.padding.leading, bounds: 0...40, step: 1, label: "Leading")
+                    self.valueSelector(self.$newSettings.padding.bottom, bounds: 0...40, step: 1, label: "Bottom")
+                    self.valueSelector(self.$newSettings.padding.trailing, bounds: 0...40, step: 1, label: "Trailing")
+                }
 
-                    Section(header: Text("Scroll Options")) {
-                        Picker(selection: self.$newSettings.scrollDirection, label: Text("Direction")) {
-                            ForEach(Axis.allCases, id: \.self) { axes in
-                                Text(axes.description.capitalized)
-                            }
+                Section(header: Text("Scroll Options")) {
+                    Picker(selection: self.$newSettings.scrollDirection, label: Text("Direction")) {
+                        ForEach(Axis.allCases, id: \.self) { axes in
+                            Text(axes.description.capitalized)
                         }
-                        Toggle(isOn: self.$newSettings.showsIndicators) {
-                            Text("Show Indicators")
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
                     }
+                    Toggle(isOn: self.$newSettings.showsIndicators) {
+                        Text("Show Indicators")
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
 
-                    Section(header: Text("Animation")) {
-                        Toggle(isOn: self.$animationEnabled) {
-                            Text("Enabled")
-                        }
-                        if self.animationEnabled {
-                            self.valueSelector(self.$newSettings.animationSpeed, bounds: 0.1...1, step: 0.05, label: "Speed", in: geometry)
-                        }
+                Section(header: Text("Animation")) {
+                    Toggle(isOn: self.$animationEnabled) {
+                        Text("Enabled")
+                    }
+                    if self.animationEnabled {
+                        self.valueSelector(self.$newSettings.animationSpeed, bounds: 0.1...1, step: 0.05, label: "Speed")
                     }
                 }
-                .onDisappear {
-                    let animation = Animation.default.speed(self.newSettings.animationSpeed)
-                    self.newSettings.animation = self.animationEnabled ? animation : nil
-                    self.settings.wrappedValue = self.newSettings
-                }
-                .customNavigationBarTitle(Text("Settings"), displayMode: .inline)
-                .customNavigationBarItems(leading: self.leadingNavigationBarItems(), trailing: self.trailingNavigationBarItems())
             }
+            .onDisappear {
+                let animation = Animation.default.speed(self.newSettings.animationSpeed)
+                self.newSettings.animation = self.animationEnabled ? animation : nil
+                self.settings.wrappedValue = self.newSettings
+            }
+            .customNavigationBarTitle(Text("Settings"), displayMode: .inline)
+            .customNavigationBarItems(leading: self.leadingNavigationBarItems(), trailing: self.trailingNavigationBarItems())
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
-    private func valueSelector<V>(_ selection: Binding<V>, bounds: ClosedRange<V>, step: V.Stride, label: String, in geometry: GeometryProxy) -> some View
+    private func valueSelector<V>(_ selection: Binding<V>, bounds: ClosedRange<V>, step: V.Stride, label: String) -> some View
         where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
-            #if os(tvOS)
-            return Picker(selection: selection, label: Text(label)) {
+            #if os(tvOS) || os(visionOS)
+            Picker(selection: selection, label: Text(label)) {
                 ForEach(Array(stride(from: bounds.lowerBound, through: bounds.upperBound, by: step)), id: \.self) { index in
                     Text(String(format:"%.2f", Double(index)))
                 }
             }
             #else
-            return HStack() {
-                Text("\(label): \(String(format:"%.2f", Double(selection.wrappedValue)))")
-                Spacer()
-                Slider(value: selection, in: bounds, step: step)
-                    .frame(width: geometry.size.width / 2)
+            GeometryReader { geometry in
+                HStack() {
+                    Text("\(label): \(String(format:"%.2f", Double(selection.wrappedValue)))")
+                    Spacer()
+                    Slider(value: selection, in: bounds, step: step)
+                        .frame(width: geometry.size.width / 2)
+                }
             }
             #endif
     }
