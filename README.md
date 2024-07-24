@@ -159,7 +159,7 @@ Add it as a dependency within your `Package.swift` manifest:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "1.0.0")
+  .package(url: "https://github.com/paololeonardi/WaterfallGrid.git", from: "1.1.0")
 ]
 ```
 
@@ -168,7 +168,7 @@ dependencies: [
 You can install `WaterfallGrid` via CocoaPods by adding the following line to your `Podfile`:
 
 ```ruby
-pod 'WaterfallGrid', '~> 1.0.0'
+pod 'WaterfallGrid', '~> 1.1.0'
 ```
 
 Run the `pod install` command to download the library
