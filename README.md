@@ -6,17 +6,8 @@ A waterfall grid layout view for SwiftUI.
 	<img src="https://paololeonardi.github.io/waterfallgrid/resources/demo1.png" alt="Image Demo 1"/>
 </p>
 
-<p align="center">
-	<img src="https://img.shields.io/badge/Swift-5.1-red?style=flat" />
-	<img src="https://img.shields.io/cocoapods/p/WaterfallGrid" />
-	<a href="https://swift.org/package-manager">
-		<img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
-	</a>
-	<img src="https://img.shields.io/cocoapods/v/WaterfallGrid?color=blue" />
-	<a href="https://twitter.com/paololeonardi">
-		<img src="https://img.shields.io/badge/contact-@paololeonardi-blue.svg?style=flat" alt="Twitter: @paololeonardi" />
-	</a>
-</p>
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpaololeonardi%2FWaterfallGrid%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/paololeonardi/WaterfallGrid)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpaololeonardi%2FWaterfallGrid%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/paololeonardi/WaterfallGrid)
 
 ## Features
 
@@ -25,12 +16,6 @@ A waterfall grid layout view for SwiftUI.
 - [x] Spacing and grid padding customizable.
 - [x] Horizontal or vertical scroll direction.
 - [x] Items update can be animated.
-
-## Requirements
-
-- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 6.0+
-- Xcode 11.0+
-- Swift 5.1+
 
 ## Usage
 
