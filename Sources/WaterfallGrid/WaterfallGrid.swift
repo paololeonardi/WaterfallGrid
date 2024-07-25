@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A container that presents items of variable heights arranged in a grid.
-@available(iOS 13, OSX 10.15, tvOS 13, watchOS 6, *)
+@available(iOS 13, OSX 10.15, tvOS 13, visionOS 1, watchOS 6, *)
 public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCollection, Content : View, ID : Hashable {
 
     @Environment(\.gridStyle) private var style
@@ -61,7 +61,7 @@ public struct WaterfallGrid<Data, ID, Content>: View where Data : RandomAccessCo
                         .opacity(self.alignmentGuides[element[keyPath: self.dataId]] != nil ? 1 : 0)
                 }
             }
-            .animation(self.loaded ? self.style.animation : nil)
+            .animation(self.loaded ? self.style.animation : nil, value: UUID())
     }
 
     // MARK: - Helpers

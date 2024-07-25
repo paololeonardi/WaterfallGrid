@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "WaterfallGrid"
-  spec.version = "1.0.1"
+  spec.version = "1.1.0"
   spec.summary = "A waterfall grid layout view for SwiftUI."
   spec.homepage = "https://github.com/paololeonardi/WaterfallGrid"
 
@@ -14,7 +14,7 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = "6.0"
   spec.tvos.deployment_target = "13.0"
 
-  spec.swift_version = '5.1'
+  spec.swift_version = '5.9'
 
   spec.source = { :git => "https://github.com/paololeonardi/WaterfallGrid.git", :tag => "#{spec.version}" }
 

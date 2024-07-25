@@ -48,5 +48,8 @@ jobs:
     - name: Build (tvOS)
       run: xcodebuild build -scheme WaterfallGrid -destination "platform=tvOS Simulator,OS=17.5,name=Apple TV" | xcpretty
 
+    - name: Build (visionOS)
+      run: xcodebuild build -scheme WaterfallGrid -destination "platform=visionOS Simulator,OS=1.2,name=Apple Vision Pro" | xcpretty
+
     - name: Build (watchOS)
       run: xcodebuild build -scheme WaterfallGrid -destination "platform=watchOS Simulator,OS=10.5,name=Apple Watch Ultra 2 (49mm)" | xcpretty
